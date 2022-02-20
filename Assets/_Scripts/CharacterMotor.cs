@@ -25,6 +25,7 @@ public class CharacterMotor : MonoBehaviour
     [SerializeField] private float stepDisplaceLerp = 0.9f;
 
     [Header("Movement Stats")]
+    
     [Tooltip("Time after character has become ungrounded in which they can still jump.")]
     [SerializeField] private float coyoteTime = 0.2f;
     [Tooltip("Buffer time where jump attempts still try to go through while jumping conditions are not currently met")]
@@ -38,6 +39,7 @@ public class CharacterMotor : MonoBehaviour
     [SerializeField] private float groundedDrag = 3f;
     [SerializeField] private float airDrag = 6f;
 
+   
     private Vector3 moveVelocity;
     private Vector3 displacementThisFrame;
     private Vector3 groundedBoxCastSize;
@@ -66,6 +68,8 @@ public class CharacterMotor : MonoBehaviour
 
     private void Awake()
     {
+        
+      
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
 
@@ -101,7 +105,7 @@ public class CharacterMotor : MonoBehaviour
     {
         GroundedChecks();
 
-        moveVelocity *= (isGrounded ? 1f : airControlFactor);
+        moveVelocity *= (isGrounded ?  1f : airControlFactor);
 
         // Final displacement of rigidbody.
         rb.MovePosition(rb.position + displacementThisFrame);
@@ -112,6 +116,8 @@ public class CharacterMotor : MonoBehaviour
 
         //Debug.LogFormat("Grounded: {0}", isGrounded);
     }
+
+   
 
     public Vector3 GetDragForce()
     {
