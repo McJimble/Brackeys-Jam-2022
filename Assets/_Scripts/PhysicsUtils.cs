@@ -153,8 +153,29 @@ public static class PhysicsUtils
     public static Vector3 GetCapsuleBottomWorld(CapsuleCollider cap)
     {
         Vector3 capsuleBottomWorld = (cap.center + cap.transform.position);
-        capsuleBottomWorld += (-CapsuleDirectionToAxis(cap) * (cap.height * 0.5f));
+        capsuleBottomWorld += (-CapsuleDirectionToAxis(cap) * (cap.height * 0.5f * cap.transform.lossyScale.y));
 
         return capsuleBottomWorld;
     }
+
+    public static float GetCapsuleScaledRadius(CapsuleCollider cap)
+    {
+        Vector3 scale = cap.transform.lossyScale;
+        float absoluteRadius = 0;
+        switch (cap.direction)
+        {
+            case 0:
+                absoluteRadius = Mathf.Abs(Mathf.Max(Mathf.Abs(scale.y), Mathf.Abs(scale.z)) * cap.radius);
+                break;
+            case 1:
+                absoluteRadius = Mathf.Abs(Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z)) * cap.radius);
+                break;
+            case 2:
+                absoluteRadius = Mathf.Abs(Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.y)) * cap.radius);
+                break;
+        }
+
+        return Mathf.Max(absoluteRadius, Mathf.Epsilon);
+    }
+
 }
