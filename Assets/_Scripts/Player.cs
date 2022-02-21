@@ -2,30 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IInteractor
 {
     [SerializeField] float movementSpeed = 10f;
+    [SerializeField] private Vector2 movementInput;
 
-    CharacterInputs characterInputs;
-    CharacterMotor characterMotor;
-    Transform cameraObject;
+    private CharacterInputs characterInputs;
+    private CharacterMotor characterMotor;
+    private Transform cameraObject;
+    private bool interractAction = false;
 
-    public  Vector2 movementInput;
+    [SerializeField] private List<Interactable> inRangeInteractables;
+    private BehaviourDistanceComparerer distanceComparerer;
 
+    bool IInteractor.CanInteract { get => characterInputs.Player.Interact.triggered; }
 
-
+    public CharacterInputs CharacterInputs { get => characterInputs; }
 
     private void Awake()
     {
+        distanceComparerer = new BehaviourDistanceComparerer(transform);
+        inRangeInteractables.Clear();
+
         characterMotor = GetComponent<CharacterMotor>();
         cameraObject = Camera.main.transform;
-       
     }
 
     private void OnEnable()
     {
         characterInputs = new CharacterInputs();
         characterInputs.Player.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+        characterInputs.Player.Interact.performed += i => AttemptInterract();
         
         characterInputs.Enable();
     }
@@ -46,6 +53,32 @@ public class Player : MonoBehaviour
     {
         characterMotor.SetMoveVelocity(SetMovementFromInput());
        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Interactable interactableObj;
+        if (other.TryGetComponent(out interactableObj) && interactableObj.RequiredKeyPress && !inRangeInteractables.Contains(interactableObj))
+        {
+            inRangeInteractables.Add(interactableObj);
+            inRangeInteractables.Sort(distanceComparerer);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Interactable interactableObj;
+        if (other.TryGetComponent(out interactableObj))
+        {
+            inRangeInteractables.Remove(interactableObj);
+            inRangeInteractables.Sort(distanceComparerer);
+        }
+    }
+
+    private void AttemptInterract()
+    {
+        if (inRangeInteractables.Count <= 0) return;
+        inRangeInteractables[0].TryInterract(this);
     }
 
     public Vector3 SetMovementFromInput()
