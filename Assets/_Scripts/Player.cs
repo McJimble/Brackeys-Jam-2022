@@ -14,30 +14,38 @@ public class Player : MonoBehaviour
 
 
 
+
     private void Awake()
     {
         characterMotor = GetComponent<CharacterMotor>();
         cameraObject = Camera.main.transform;
        
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnEnable()
     {
         characterInputs = new CharacterInputs();
         characterInputs.Player.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
+        
         characterInputs.Enable();
     }
+    private void OnDisable()
+    {
+        characterInputs.Disable();
+    }
 
-
+    private void Update()
+    {
+        if (characterInputs.Player.Actions.triggered)
+        {
+            characterMotor.StartJump();
+        }
+    }
 
     private void FixedUpdate()
     {
         characterMotor.SetMoveVelocity(SetMovementFromInput());
+       
     }
 
     public Vector3 SetMovementFromInput()

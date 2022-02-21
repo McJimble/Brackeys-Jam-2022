@@ -14,7 +14,7 @@ public class CharacterMotor : MonoBehaviour
 {
     // Avoids grounded check passing true on character jump.
     public static readonly float JUMP_DELAY = 0.15f;
-    public static readonly Vector3 GROUND_RAY_OFFSET = new Vector3(0f, -0.3f, 0);
+    public static readonly Vector3 GROUND_RAY_OFFSET = new Vector3(0f, 0, 0);
 
     [Header("Grounded Checks")]
     [SerializeField] private LayerMask whatIsGroundMask;
@@ -73,7 +73,7 @@ public class CharacterMotor : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
 
-        groundedBoxCastSize = new Vector3(capsule.radius, groundCheckHeight, capsule.radius);
+        groundedBoxCastSize = new Vector3(PhysicsUtils.GetCapsuleScaledRadius(capsule), groundCheckHeight, PhysicsUtils.GetCapsuleScaledRadius(capsule));
 
         onMotorGrounded += ResetRBVerticalVelocity;
 
@@ -89,7 +89,7 @@ public class CharacterMotor : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(groundedRay.origin, groundedRay.origin + (groundedRay.direction * groundCheckHeight));
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(groundedRay.origin, capsule.radius);
+        Gizmos.DrawWireSphere(groundedRay.origin, PhysicsUtils.GetCapsuleScaledRadius(capsule));
         Gizmos.DrawWireSphere(groundedHitInfo.point, 0.3f);
     }
 #endif
@@ -142,13 +142,13 @@ public class CharacterMotor : MonoBehaviour
         // If currently jumping, don't check if grounded since we need initial jump to work.
         if (IsJumping) return;
 
-        groundedRay.origin = capsule.center + transform.position + GROUND_RAY_OFFSET;
+        groundedRay.origin = capsule.center + rb.position + GROUND_RAY_OFFSET;
         groundedRay.direction = Vector3.down;
         float rayLength = (groundCheckHeight + capsule.height / 2) + GROUND_RAY_OFFSET.y;
 
         // Sphere cast check for grounded; if detected point slightly above ground check distance, add displacement vertically so the body
         // can move up steps. If this passes at all, we are grounded and dynamic friction is reactivated.
-        if (Physics.SphereCast(groundedRay.origin, capsule.radius, groundedRay.direction, out groundedHitInfo, rayLength, whatIsGroundMask))
+        if (Physics.SphereCast(groundedRay.origin, .1f, groundedRay.direction, out groundedHitInfo, rayLength, whatIsGroundMask))
         {
             float capsuleBottomY = PhysicsUtils.GetCapsuleBottomWorld(capsule).y;
             if (groundedHitInfo.point.y > capsuleBottomY)
