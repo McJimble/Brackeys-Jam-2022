@@ -75,11 +75,4 @@ public class PressurePlate : Interactable
         }
         CurrentlyInteracting = false;
     }
-
-    public void DebugInterract()
-    {
-
-    }
-
-
 }
