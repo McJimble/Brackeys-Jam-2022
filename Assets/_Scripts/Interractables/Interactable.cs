@@ -38,8 +38,8 @@ public abstract class Interactable : MonoBehaviour
         Player player;
         if (other.TryGetComponent<Player>(out player))
         {
-            onEnterRadius.Invoke();
             interractingPlayer = player;
+            onEnterRadius.Invoke();
         }
     }
 

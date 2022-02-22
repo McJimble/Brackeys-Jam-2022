@@ -63,6 +63,8 @@ public class CharacterMotor : MonoBehaviour
     public bool IsJumping { get => jumpDelayTimeRemaining > 0f; }
     public float JumpSpeed { get => jumpSpeed; set => jumpSpeed = value; }
 
+    public Rigidbody AttachedRB { get => rb; }
+
     public event System.Action onMotorGrounded;
     public event System.Action onMotorUngrounded;
 

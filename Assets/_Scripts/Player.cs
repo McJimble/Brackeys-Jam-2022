@@ -6,6 +6,8 @@ public class Player : MonoBehaviour, IInteractor
 {
     [SerializeField] float movementSpeed = 10f;
     [SerializeField] private Vector2 movementInput;
+    [SerializeField] Transform spawnPoint;
+    [SerializeField] Transform shoveToPoint;
 
     private CharacterInputs characterInputs;
     private CharacterMotor characterMotor;
@@ -18,7 +20,11 @@ public class Player : MonoBehaviour, IInteractor
     bool IInteractor.CanInteract { get => characterInputs.Player.Interact.triggered; }
 
     public CharacterInputs CharacterInputs { get => characterInputs; }
+    public Transform SpawnPoint { get => spawnPoint; }
+    public Transform ShovePoint { get => shoveToPoint;  }
 
+    public CharacterMotor AttachedMotor { get => characterMotor; }
+   
     private void Awake()
     {
         distanceComparerer = new BehaviourDistanceComparerer(transform);
@@ -38,6 +44,8 @@ public class Player : MonoBehaviour, IInteractor
     }
     private void OnDisable()
     {
+        characterMotor.SetMoveVelocity(Vector3.zero);
+        movementInput = Vector2.zero;
         characterInputs.Disable();
     }
 
