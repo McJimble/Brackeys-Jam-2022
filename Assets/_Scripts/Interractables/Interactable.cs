@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
-[RequireComponent(typeof(Collider))]
 public abstract class Interactable : MonoBehaviour
 { 
     [SerializeField] protected bool requiresKeyPress = true;
@@ -51,5 +50,10 @@ public abstract class Interactable : MonoBehaviour
             onExitRadius.Invoke();
             interractingPlayer = null;
         }
+    }
+
+    public void DebugInterract()
+    {
+        Debug.Log("Interacted with: " + gameObject.name);
     }
 }
