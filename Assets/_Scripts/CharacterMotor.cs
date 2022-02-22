@@ -148,8 +148,9 @@ public class CharacterMotor : MonoBehaviour
 
         // Sphere cast check for grounded; if detected point slightly above ground check distance, add displacement vertically so the body
         // can move up steps. If this passes at all, we are grounded and dynamic friction is reactivated.
-        if (Physics.SphereCast(groundedRay.origin, .1f, groundedRay.direction, out groundedHitInfo, rayLength, whatIsGroundMask))
+        if (Physics.SphereCast(groundedRay.origin, .1f, groundedRay.direction, out groundedHitInfo, rayLength, whatIsGroundMask) && !groundedHitInfo.collider.isTrigger)
         {
+            
             float capsuleBottomY = PhysicsUtils.GetCapsuleBottomWorld(capsule).y;
             if (groundedHitInfo.point.y > capsuleBottomY)
             {

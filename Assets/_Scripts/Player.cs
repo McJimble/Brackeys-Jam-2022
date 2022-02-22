@@ -78,7 +78,10 @@ public class Player : MonoBehaviour, IInteractor
     private void AttemptInterract()
     {
         if (inRangeInteractables.Count <= 0) return;
-        inRangeInteractables[0].TryInterract(this);
+        foreach (var interactble in inRangeInteractables)
+        {
+            interactble.TryInterract(this);
+        }
     }
 
     public Vector3 SetMovementFromInput()

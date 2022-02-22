@@ -16,16 +16,19 @@ public abstract class Interactable : MonoBehaviour
     protected Collider genericTriggerBounds;
 
     public bool RequiredKeyPress { get => requiresKeyPress; }
+    public bool CurrentlyInteracting { get; protected set; }
 
     protected virtual void Awake()
     {
+        CurrentlyInteracting = false;
         genericTriggerBounds = GetComponent<Collider>();
     }
 
-    public virtual void TryInterract(IInteractor interactor)
+    public virtual bool TryInterract(IInteractor interactor)
     {
-        if (!interactor.CanInteract) return;
+        if (!interactor.CanInteract || CurrentlyInteracting) return false;
         Debug.Log("Interracted with " + gameObject.name);
+        return true;
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -43,7 +46,7 @@ public abstract class Interactable : MonoBehaviour
         Player player;
         if (other.TryGetComponent<Player>(out player) && player == interractingPlayer)
         {
-            onEnterRadius.Invoke();
+            onExitRadius.Invoke();
             interractingPlayer = null;
         }
     }
