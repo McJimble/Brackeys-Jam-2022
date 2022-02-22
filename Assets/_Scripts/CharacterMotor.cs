@@ -14,7 +14,7 @@ public class CharacterMotor : MonoBehaviour
 {
     // Avoids grounded check passing true on character jump.
     public static readonly float JUMP_DELAY = 0.15f;
-    public static readonly Vector3 GROUND_RAY_OFFSET = new Vector3(0f, 0, 0);
+    public static readonly Vector3 GROUND_RAY_OFFSET = new Vector3(0, 0.3f, 0);
 
     [Header("Grounded Checks")]
     [SerializeField] private LayerMask whatIsGroundMask;
@@ -144,7 +144,7 @@ public class CharacterMotor : MonoBehaviour
 
         groundedRay.origin = capsule.center + rb.position + GROUND_RAY_OFFSET;
         groundedRay.direction = Vector3.down;
-        float rayLength = (groundCheckHeight + capsule.height / 2) + GROUND_RAY_OFFSET.y;
+        float rayLength = (groundCheckHeight + PhysicsUtils.GetCapsuleScaledHeight(capsule) / 2) + GROUND_RAY_OFFSET.y;
 
         // Sphere cast check for grounded; if detected point slightly above ground check distance, add displacement vertically so the body
         // can move up steps. If this passes at all, we are grounded and dynamic friction is reactivated.
@@ -152,7 +152,7 @@ public class CharacterMotor : MonoBehaviour
         {
             
             float capsuleBottomY = PhysicsUtils.GetCapsuleBottomWorld(capsule).y;
-            if (groundedHitInfo.point.y > capsuleBottomY)
+            if (groundedHitInfo.point.y > capsuleBottomY && Vector3.Dot(groundedHitInfo.normal, Vector3.up) > 0.99f)
             {
                 float yDisplacement = Mathf.Lerp(0f, (groundedHitInfo.point.y - capsuleBottomY), stepDisplaceLerp);
                 displacementThisFrame.y += yDisplacement;

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public abstract class Interactable : MonoBehaviour
 { 
     [SerializeField] protected bool requiresKeyPress = true;
@@ -17,16 +17,18 @@ public abstract class Interactable : MonoBehaviour
 
     public bool RequiredKeyPress { get => requiresKeyPress; }
     public bool CurrentlyInteracting { get; protected set; }
+    public bool CanBeInteracted { get; protected set; }
 
     protected virtual void Awake()
     {
         CurrentlyInteracting = false;
+        CanBeInteracted = true;
         genericTriggerBounds = GetComponent<Collider>();
     }
 
     public virtual bool TryInterract(IInteractor interactor)
     {
-        if (!interactor.CanInteract || CurrentlyInteracting) return false;
+        if (!interactor.CanInteract || !this.CanBeInteracted || CurrentlyInteracting) return false;
         Debug.Log("Interracted with " + gameObject.name);
         return true;
     }

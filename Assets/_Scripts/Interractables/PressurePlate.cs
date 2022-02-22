@@ -13,7 +13,8 @@ public class PressurePlate : Interactable
 
     Vector3 pushButtonOriginalPositon;
     Vector3 endPostion;
-    bool isReleaseAnimRunning = false;
+
+    private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
     private void Start()
     {
@@ -33,16 +34,16 @@ public class PressurePlate : Interactable
 
     public void PressurePlatePushAnim()
     {
-        if (isReleaseAnimRunning) return;
+        Debug.Log("Entered");
+        StopAllCoroutines();
         StartCoroutine(PushAnim());
     }
 
     public void PressurePlateReleaseAnim()
     {
         if (pushButtonTransform.position == pushButtonOriginalPositon) return;
-        isReleaseAnimRunning = true;
+        StopAllCoroutines();
         StartCoroutine(ReleaseAnim());
-        
     }
 
     private IEnumerator PushAnim()
@@ -52,35 +53,33 @@ public class PressurePlate : Interactable
         float pushInTime = pushInCurve.keys[pushInCurve.length - 1].time;
         float animTime = 0;
 
-        while (animTime <= pushInTime)
+        while (animTime <= pushInTime || Vector3.Distance(pushButtonTransform.position, endPostion) > 0.01f)
         {
-            pushButtonTransform.position = Vector3.Lerp(pushButtonOriginalPositon, endPostion, pushInCurve.Evaluate(animTime));
+            pushButtonTransform.position = Vector3.Lerp(pushButtonTransform.position, endPostion, pushInCurve.Evaluate(animTime));
             animTime += Time.fixedDeltaTime;
-            yield return null;
+            yield return waitForFixed;
         }
         onInterract.Invoke();
-
     }
-
-   
 
     private IEnumerator ReleaseAnim()
     {
-        
         float animTime = 0;
-        float pushOutTime = pushInCurve.keys[pushInCurve.length - 1].time;
+        float pushOutTime = pullOutCurve.keys[pullOutCurve.length - 1].time;
 
         while (animTime <= pushOutTime)
         {
-            pushButtonTransform.position = Vector3.Lerp(endPostion, pushButtonOriginalPositon, pullOutCurve.Evaluate(animTime));
+            pushButtonTransform.position = Vector3.Lerp(pushButtonTransform.position, pushButtonOriginalPositon, pullOutCurve.Evaluate(animTime));
             animTime += Time.fixedDeltaTime;
-            yield return null;
+            yield return waitForFixed;
         }
         CurrentlyInteracting = false;
-        isReleaseAnimRunning = false;
     }
 
+    public void DebugInterract()
+    {
 
+    }
 
 
 }

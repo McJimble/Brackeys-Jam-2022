@@ -158,6 +158,21 @@ public static class PhysicsUtils
         return capsuleBottomWorld;
     }
 
+    public static float GetCapsuleScaledHeight(CapsuleCollider cap)
+    {
+        switch (cap.direction)
+        {
+            case 0:
+                return cap.height * cap.transform.lossyScale.x;
+            case 1:
+                return cap.height * cap.transform.lossyScale.y;
+            case 2:
+                return cap.height * cap.transform.lossyScale.z;
+        }
+
+        return 0f;
+    }
+
     public static float GetCapsuleScaledRadius(CapsuleCollider cap)
     {
         Vector3 scale = cap.transform.lossyScale;

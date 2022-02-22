@@ -11,10 +11,6 @@ public class StandingButton : Interactable
     [SerializeField] private Outline outline;
     [SerializeField] private float moveAmountY = 0.05f;
     
-
-
-  
-
     public override bool TryInterract(IInteractor interactor)
     {
         if (!base.TryInterract(interactor)) return false;
@@ -30,7 +26,7 @@ public class StandingButton : Interactable
         Vector3 buttonOriginalPosition = pushButtonTransform.position;
         Vector3 endPosition = pushButtonTransform.position + (pushButtonTransform.up * -moveAmountY);
         float pushInTime = pushInCurve.keys[pushInCurve.length - 1].time;
-        float pullOutTime = pushInCurve.keys[pushInCurve.length - 1].time;
+        float pullOutTime = pullOutCurve.keys[pullOutCurve.length - 1].time;
         float animTime = 0;
 
         // Push in/out along respective curves.
