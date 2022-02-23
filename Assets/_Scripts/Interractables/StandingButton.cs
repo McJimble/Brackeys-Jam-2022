@@ -8,13 +8,16 @@ public class StandingButton : Interactable
     [SerializeField] private AnimationCurve pushInCurve;
     [SerializeField] private AnimationCurve pullOutCurve;
     [SerializeField] private Transform pushButtonTransform;
-    [SerializeField] private Outline outline;
     [SerializeField] private float moveAmountY = 0.05f;
     
-    public override bool TryInterract(IInteractor interactor)
+    public override bool TryInteract(IInteractor interactor)
     {
-        if (!base.TryInterract(interactor)) return false;
-        CurrentlyInteracting = true;
+        if (!base.TryInteract(interactor))
+        {
+            Debug.Log("Could not interact with " + gameObject.name);
+            return false;
+        }
+            CurrentlyInteracting = true;
         StopAllCoroutines();
         StartCoroutine(ButtonPushAnimation());
         return true;
@@ -49,11 +52,6 @@ public class StandingButton : Interactable
             yield return null;
         }
         CurrentlyInteracting = false;
-    }
-
-    public void ToggleOutline()
-    {
-        outline.enabled = !outline.enabled;
     }
 
 }
