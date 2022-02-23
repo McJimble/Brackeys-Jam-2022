@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour, IInteractor
 {
     [SerializeField] float movementSpeed = 10f;
-    [SerializeField] private Vector2 movementInput;
+    [SerializeField] public Vector2 movementInput;
     [SerializeField] Transform spawnPoint;
     [SerializeField] Transform shoveToPoint;
 
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, IInteractor
    
     private void Awake()
     {
+        
         distanceComparerer = new BehaviourDistanceComparerer(transform);
         inRangeInteractables.Clear();
 
@@ -44,9 +45,10 @@ public class Player : MonoBehaviour, IInteractor
     }
     private void OnDisable()
     {
+        
+        characterInputs.Disable();
         characterMotor.SetMoveVelocity(Vector3.zero);
         movementInput = Vector2.zero;
-        characterInputs.Disable();
     }
 
     private void Update()
@@ -99,5 +101,9 @@ public class Player : MonoBehaviour, IInteractor
         moveDirection.Normalize();
         moveDirection.y = 0;
         return moveDirection * movementSpeed;
+    }
+    public void ClearMovementInput()
+    {
+        movementInput = Vector2.zero;
     }
 }

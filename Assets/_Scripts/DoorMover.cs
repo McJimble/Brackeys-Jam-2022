@@ -85,14 +85,15 @@ public class DoorMover : Interactable
     public void MovePlayerAtStart(Player player)
     {
         if(movedPlayer == false)
-        {
-            StartCoroutine(MovePlayer(player));
+        {         
+            StartCoroutine(MovePlayer(player));   
             movedPlayer = true;
         }
     }
 
     private IEnumerator MovePlayer(Player player)
     {
+        player.CharacterInputs.Disable();
         float timeElapsed = 0f;
         yield return new WaitForSeconds(.75f);
         while (timeElapsed < .5f)
@@ -102,6 +103,7 @@ public class DoorMover : Interactable
             timeElapsed += Time.deltaTime;
             yield return null;
         }
+        player.CharacterInputs.Enable();
     }
 
 

@@ -57,7 +57,7 @@ public class CharacterMotor : MonoBehaviour
     private float initDynamicFriction;
 
     private int rootMotionGroundedFac;
-
+    public bool IsGrounded { get => isGrounded; }
     public bool IsGroundedCoyote { get => timeAirborne < coyoteTime; }
     public bool IsJumpingBuffered { get => jumpBufferTimeRemaining > 0f; }
     public bool IsJumping { get => jumpDelayTimeRemaining > 0f; }
