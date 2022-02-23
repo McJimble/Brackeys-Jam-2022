@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/AdamScene1.unity
     guid: a834aa59822e99f40b81092f8fa9351d
   - enabled: 1
-    path: Assets/Scenes/Jimmy Scene 4.unity
-    guid: 5bade46eb3d1fa041aaf6ed2c30a9617
+    path: Assets/Scenes/AdamScene1 2.unity
+    guid: b434f3dc9de4a0b42aa71f7fb203976b
   m_configObjects: {}
