@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class KillPlayerInteractible : Interactable
 {
-    public override bool TryInterract(IInteractor interactor)
+    public override bool TryInteract(IInteractor interactor)
     {
-        if (!base.TryInterract(interactor)) return false;
+        if (!base.TryInteract(interactor)) return false;
 
 
         return true;

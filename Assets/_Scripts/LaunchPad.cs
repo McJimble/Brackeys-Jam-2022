@@ -14,16 +14,16 @@ public class LaunchPad : Interactable
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (interractingPlayer)
+        if (interactingPlayer)
         {
-            LaunchPlayer(interractingPlayer);
+            LaunchPlayer(interactingPlayer);
         }
     }
 
 
     protected override void OnTriggerExit(Collider other)
     {
-        if(other.GetComponent<Player>() == interractingPlayer)
+        if(other.GetComponent<Player>() == interactingPlayer)
         {
            
         }
@@ -45,9 +45,9 @@ public class LaunchPad : Interactable
 
     private void ReEnableControl()
     {
-        interractingPlayer.CharacterInputs.Enable();
-        interractingPlayer.AttachedMotor.onMotorGrounded -= ReEnableControl;
-        interractingPlayer = null;
+        interactingPlayer.CharacterInputs.Enable();
+        interactingPlayer.AttachedMotor.onMotorGrounded -= ReEnableControl;
+        interactingPlayer = null;
     }
 
     

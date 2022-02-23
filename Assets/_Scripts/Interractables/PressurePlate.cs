@@ -22,19 +22,16 @@ public class PressurePlate : Interactable
         endPostion = pushButtonTransform.position + (pushButtonTransform.up * -moveAmount);
     }
 
-    public override bool TryInterract(IInteractor interactor)
+    public override bool TryInteract(IInteractor interactor)
     {
-        if (!base.TryInterract(interactor)) return false;
+        if (!base.TryInteract(interactor)) return false;
         
 
         return true;
     }
 
-  
-
     public void PressurePlatePushAnim()
     {
-        Debug.Log("Entered");
         StopAllCoroutines();
         StartCoroutine(PushAnim());
     }
