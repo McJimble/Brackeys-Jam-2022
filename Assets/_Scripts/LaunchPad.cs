@@ -8,6 +8,8 @@ public class LaunchPad : Interactable
     [SerializeField] float launchForce = 10f;
     [SerializeField] Transform forceDirection;
 
+    [SerializeField] bool disablePlayerControl = false;
+
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -31,6 +33,7 @@ public class LaunchPad : Interactable
     public void LaunchPlayer(Player player)
     {
         player.AttachedMotor.AttachedRB.AddForce(launchForce * forceDirection.up, ForceMode.Impulse);
+        if (!disablePlayerControl) return;
         player.CharacterInputs.Disable();
         player.ClearMovementInput();
         player.AttachedMotor.onMotorGrounded += ReEnableControl;

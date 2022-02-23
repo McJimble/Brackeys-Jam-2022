@@ -21,6 +21,7 @@ public class DoorMover : Interactable
     DoorState doorState = DoorState.closed;
     Vector3 originalDoorPostion;
     Vector3 endPosition;
+    Vector3 gizmoSize = new Vector3(2f, .5f, 2f);
     bool movedPlayer = false;
   
 
@@ -34,7 +35,12 @@ public class DoorMover : Interactable
         endPosition = doorToMove.position + (doorToMove.up * moveAmount);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(transform.position, gizmoSize);
 
+    }
 
 
     public IEnumerator OpenLerpDoor()
@@ -54,7 +60,7 @@ public class DoorMover : Interactable
 
     public IEnumerator CloseLerpDoor()
     {
-       
+        doorState = DoorState.closed;
         float timeElapsed = 0;
         float closeDoorTime = closeDoorCurve.keys[closeDoorCurve.length - 1].time;
         while (timeElapsed <= closeDoorTime)
@@ -64,10 +70,14 @@ public class DoorMover : Interactable
             yield return null;
         }
         doorToMove.position = originalDoorPostion;
-        doorState = DoorState.closed;
+       
     }
 
-   
+   public void OpenDoor()
+    {
+        if (doorState == DoorState.open) return;
+        StartCoroutine(OpenLerpDoor());
+    }
 
     public void TriggerDoor()
     {
