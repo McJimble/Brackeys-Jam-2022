@@ -6292,6 +6292,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd411a354adb1534389a5382c6436f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiresKeyPress: 1
+  onEnterRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onInterract:
+    m_PersistentCalls:
+      m_Calls: []
   openOnStart: 1
   doorToMove: {fileID: 525666019}
   moveAmount: 3.5
@@ -6360,7 +6370,7 @@ PrefabInstance:
       objectReference: {fileID: 245750985}
     - target: {fileID: 39033315739695239, guid: 54a5b7a4cdbe41242bb01668bd821f80, type: 3}
       propertyPath: m_VersionIndex
-      value: 5957
+      value: 5963
       objectReference: {fileID: 0}
     - target: {fileID: 2914874429977853280, guid: 54a5b7a4cdbe41242bb01668bd821f80, type: 3}
       propertyPath: m_Name
@@ -8517,6 +8527,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd411a354adb1534389a5382c6436f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiresKeyPress: 1
+  onEnterRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onInterract:
+    m_PersistentCalls:
+      m_Calls: []
   openOnStart: 0
   doorToMove: {fileID: 525666019}
   moveAmount: 3.5
@@ -9133,7 +9153,7 @@ PrefabInstance:
       objectReference: {fileID: 647226221}
     - target: {fileID: 39033315739695239, guid: 54a5b7a4cdbe41242bb01668bd821f80, type: 3}
       propertyPath: m_VersionIndex
-      value: 5960
+      value: 5966
       objectReference: {fileID: 0}
     - target: {fileID: 2914874429977853280, guid: 54a5b7a4cdbe41242bb01668bd821f80, type: 3}
       propertyPath: m_Name
@@ -9334,7 +9354,7 @@ PrefabInstance:
       objectReference: {fileID: 287220859}
     - target: {fileID: 5554131509197991533, guid: fc20413370df40649bb97914791110f4, type: 3}
       propertyPath: m_VersionIndex
-      value: 1442
+      value: 1448
       objectReference: {fileID: 0}
     - target: {fileID: 6564392336552950918, guid: fc20413370df40649bb97914791110f4, type: 3}
       propertyPath: m_Mesh
@@ -9342,7 +9362,7 @@ PrefabInstance:
       objectReference: {fileID: 1524553357}
     - target: {fileID: 6564392336552950918, guid: fc20413370df40649bb97914791110f4, type: 3}
       propertyPath: m_VersionIndex
-      value: 3924
+      value: 3930
       objectReference: {fileID: 0}
     - target: {fileID: 7097480909610216697, guid: fc20413370df40649bb97914791110f4, type: 3}
       propertyPath: m_Name
@@ -9491,7 +9511,7 @@ PrefabInstance:
       objectReference: {fileID: 1851736619}
     - target: {fileID: 7983680294840804704, guid: 1553e056f258773419efea1b29781430, type: 3}
       propertyPath: m_VersionIndex
-      value: 2324
+      value: 2327
       objectReference: {fileID: 0}
     - target: {fileID: 7983680295387979640, guid: 1553e056f258773419efea1b29781430, type: 3}
       propertyPath: pathIndex

@@ -30,11 +30,8 @@ public class PressurePlate : Interactable
         return true;
     }
 
-  
-
     public void PressurePlatePushAnim()
     {
-        Debug.Log("Entered");
         StopAllCoroutines();
         StartCoroutine(PushAnim());
     }
