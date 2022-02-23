@@ -75,6 +75,7 @@ public class Elevator : Interactable
     {
         // Incase useer specifies one that is too large/small.
         pathIndex = System.Math.Clamp(pathIndex, 0, movePathInfos.Length - 1);
+        transform.position = movePathInfos[pathIndex].moveToTransform.position;
     }
 
     private void Update()
@@ -124,22 +125,31 @@ public class Elevator : Interactable
 
     public void SetNextMoveTo(int index)
     {
-        index = System.Math.Clamp(index, 0, movePathInfos.Length - 1);
+        pathIndex = System.Math.Clamp(index, 0, movePathInfos.Length - 1);
         SetNextMoveTo(movePathInfos[index]);
     }
 
     public void SetNextMoveToInstant(int index)
     {
-        index = System.Math.Clamp(index, 0, movePathInfos.Length - 1);
+        pathIndex = System.Math.Clamp(index, 0, movePathInfos.Length - 1);
         SetNextMoveTo(movePathInfos[index], false);
     }
 
-    public void MoveToNextInPath(bool isDelayed)
+    public void MoveToNextInPathInstant()
     {
         int nextIndexToTry = (pathIndex + 1) % movePathInfos.Length;
         if (!CanMoveNext(movePathInfos[nextIndexToTry])) return;
 
         pathIndex = nextIndexToTry;
-        SetNextMoveTo(movePathInfos[pathIndex], isDelayed);
+        SetNextMoveTo(movePathInfos[pathIndex], false);
+    }
+
+    public void MoveToNextInPath()
+    {
+        int nextIndexToTry = (pathIndex + 1) % movePathInfos.Length;
+        if (!CanMoveNext(movePathInfos[nextIndexToTry])) return;
+
+        pathIndex = nextIndexToTry;
+        SetNextMoveTo(movePathInfos[pathIndex], true);
     }
 }
