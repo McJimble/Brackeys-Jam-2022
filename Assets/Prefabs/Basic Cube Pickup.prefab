@@ -151,10 +151,11 @@ MonoBehaviour:
   onExitRadius:
     m_PersistentCalls:
       m_Calls: []
-  onInterract:
+  onInteract:
     m_PersistentCalls:
       m_Calls: []
   distanceFromHolder: 2
+  pickupRangeTrigger: {fileID: 2596035489340291959}
 --- !u!114 &2596035489340291956
 MonoBehaviour:
   m_ObjectHideFlags: 0

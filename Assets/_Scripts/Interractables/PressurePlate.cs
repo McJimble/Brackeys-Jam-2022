@@ -56,7 +56,7 @@ public class PressurePlate : Interactable
             animTime += Time.fixedDeltaTime;
             yield return waitForFixed;
         }
-        onInterract.Invoke();
+        InvokeInteract(null);
     }
 
     private IEnumerator ReleaseAnim()

@@ -19,11 +19,11 @@ public class StandingButton : Interactable
         }
             CurrentlyInteracting = true;
         StopAllCoroutines();
-        StartCoroutine(ButtonPushAnimation());
+        StartCoroutine(ButtonPushAnimation(interactor));
         return true;
     }
 
-    private IEnumerator ButtonPushAnimation()
+    private IEnumerator ButtonPushAnimation(IInteractor pushInteractor)
     {
         
         Vector3 buttonOriginalPosition = pushButtonTransform.position;
@@ -41,7 +41,7 @@ public class StandingButton : Interactable
         }
 
         // Interract when pushed all the way in.
-        onInterract.Invoke();
+        InvokeInteract(pushInteractor);
 
         // Pull out now.
         animTime = 0;

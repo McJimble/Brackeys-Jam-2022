@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Elevator : Interactable
 {
     [System.Serializable]
@@ -70,15 +71,14 @@ public class Elevator : Interactable
         }
     }
 #endif
-
     private void Start()
     {
-        // Incase useer specifies one that is too large/small.
+        // Incase user specifies one that is too large/small.
         pathIndex = System.Math.Clamp(pathIndex, 0, movePathInfos.Length - 1);
         transform.position = movePathInfos[pathIndex].moveToTransform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (currentTimedInfo != null)
         {
@@ -93,7 +93,7 @@ public class Elevator : Interactable
             {
                 elevatorTransform.position = Vector3.Lerp(startMovePosition,
                                                   currentTimedInfo.moveToTransform.position,
-                                                  currentTimedInfo.moveToCurve.Evaluate(moveTimeElapsed));
+                                                  currentTimedInfo.moveToCurve.Evaluate(moveTimeElapsed)); 
 
                 moveTimeElapsed += Time.deltaTime;
             }

@@ -18,15 +18,20 @@ public class Player : MonoBehaviour, IInteractor
     [SerializeField] private BasePickup heldPickup;
     private BehaviourDistanceComparerer distanceComparerer;
 
+    // ---- IInteractor stuff ----
     bool IInteractor.CanInteract { get => true; }
-
+    Transform IInteractor.InteractingTransform { get => transform; }
+    Rigidbody IInteractor.InteractingRB { get => AttachedMotor.AttachedRB; }
+    bool IInteractor.CanInterchangeParents => true;
+    // ----------------------------
     public CharacterInputs CharacterInputs { get => characterInputs; }
     public Transform SpawnPoint { get => spawnPoint; }
     public Transform ShovePoint { get => shoveToPoint;  }
 
     public CharacterMotor AttachedMotor { get => characterMotor; }
     public bool FaceMovementDirection { get => faceMovementDirection; set => faceMovementDirection = value; }
-   
+
+
     private void Awake()
     {
         distanceComparerer = new BehaviourDistanceComparerer(transform);
@@ -47,7 +52,7 @@ public class Player : MonoBehaviour, IInteractor
     private void OnDisable()
     {
         characterInputs.Disable();
-        characterMotor.SetMoveVelocity(Vector3.zero);
+        characterMotor.AttachedRB.velocity = Vector3.zero;
         movementInput = Vector2.zero;
     }
 
@@ -74,7 +79,7 @@ public class Player : MonoBehaviour, IInteractor
         Interactable interactableObj;
         if (other.TryGetComponent(out interactableObj)
             && interactableObj.RequiredKeyPress
-            && interactableObj.FulfillsInteractionsParams(this)
+            && interactableObj.FulfillsInitialInteractionsParams(this)
             && !inRangeInteractables.Contains(interactableObj))
         {
             inRangeInteractables.Add(interactableObj);
@@ -113,6 +118,27 @@ public class Player : MonoBehaviour, IInteractor
                 break;
             }
         }
+    }
+
+    public bool AddInRangeInteractableOverride(Interactable toAdd)
+    {
+        if (inRangeInteractables.Contains(toAdd)) return false;
+
+        inRangeInteractables.Add(toAdd);
+        inRangeInteractables.Sort(distanceComparerer);
+        inRangeInteractables[0].ToggleInteractAvailableEffect(true);
+
+        return true;
+    }
+
+    public bool RemoveInRangeInteractableOverride(Interactable toRem)
+    {
+        if (!inRangeInteractables.Remove(toRem)) return false;
+
+        inRangeInteractables.Sort(distanceComparerer);
+        toRem.ToggleInteractAvailableEffect(false);
+
+        return true;
     }
 
     public Vector3 SetMovementFromInput()

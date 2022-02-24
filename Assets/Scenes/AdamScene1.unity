@@ -8449,7 +8449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd411a354adb1534389a5382c6436f40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  automaticallyTrackPlayers: 1
   requiresKeyPress: 0
+  outlineEffect: {fileID: 0}
   onEnterRadius:
     m_PersistentCalls:
       m_Calls:
