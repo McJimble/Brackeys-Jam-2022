@@ -62,7 +62,6 @@ public class CharacterMotor : MonoBehaviour
     public bool IsJumpingBuffered { get => jumpBufferTimeRemaining > 0f; }
     public bool IsJumping { get => jumpDelayTimeRemaining > 0f; }
     public float JumpSpeed { get => jumpSpeed; set => jumpSpeed = value; }
-
     public Rigidbody AttachedRB { get => rb; }
 
     public event System.Action onMotorGrounded;
@@ -70,8 +69,6 @@ public class CharacterMotor : MonoBehaviour
 
     private void Awake()
     {
-        
-      
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
 
@@ -150,9 +147,19 @@ public class CharacterMotor : MonoBehaviour
 
         // Sphere cast check for grounded; if detected point slightly above ground check distance, add displacement vertically so the body
         // can move up steps. If this passes at all, we are grounded and dynamic friction is reactivated.
-        if (Physics.SphereCast(groundedRay.origin, .1f, groundedRay.direction, out groundedHitInfo, rayLength, whatIsGroundMask) && !groundedHitInfo.collider.isTrigger)
+        int castHits = Physics.SphereCastNonAlloc(groundedRay.origin, .1f, groundedRay.direction, PhysicsUtils.NonAllocRaycasts, rayLength, whatIsGroundMask);
+        if (castHits > 0)
         {
-            
+            // Get first raycast that hit a non-trigger collider.
+            for (int i = 0; i < castHits; i++)
+            {
+                if (!PhysicsUtils.NonAllocRaycasts[i].collider.isTrigger)
+                {
+                    groundedHitInfo = PhysicsUtils.NonAllocRaycasts[i];
+                    break;
+                }
+            }
+
             float capsuleBottomY = PhysicsUtils.GetCapsuleBottomWorld(capsule).y;
             if (groundedHitInfo.point.y > capsuleBottomY && Vector3.Dot(groundedHitInfo.normal, Vector3.up) > 0.99f)
             {
@@ -169,15 +176,16 @@ public class CharacterMotor : MonoBehaviour
         // when reaching the top of them. 
         if (Physics.Raycast(groundedRay, out pullToGroundHitInfo, pullToGroundHeight, whatIsGroundMask))
         {
-            rb.AddForce(0f, -pullToGroundForce, 0f, ForceMode.VelocityChange);
+            rb.AddForce(0f, -pullToGroundForce, 0f, ForceMode.Acceleration);
         }
     }
 
+    // Adds movement velocity that accounts for drag and other forces
     public void SetMoveVelocity(Vector3 vel)
     {
-        moveVelocity = vel;
+        moveVelocity += vel;
     }
-
+    
     public void StartJump(bool resetYVel = true)
     {
         jumpBufferTimeRemaining = jumpBufferTime;
@@ -203,5 +211,4 @@ public class CharacterMotor : MonoBehaviour
         newVel.y = 0f;
         rb.velocity = newVel;
     }
-
 }

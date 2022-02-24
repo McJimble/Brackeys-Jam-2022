@@ -31,6 +31,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _Alpha: 0.647
     - _AlphaCutoff: 0
@@ -43,3 +44,4 @@ Material:
     m_Colors:
     - _DSPBaseAlpha: {r: 1, g: 0, b: 0, a: 1}
     - _DSPEnableAlphaCutoff: {r: 1, g: 0, b: 1, a: 0}
+  m_BuildTextureStacks: []

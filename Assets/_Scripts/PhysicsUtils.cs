@@ -24,10 +24,9 @@ public static class PhysicsUtils
         public static readonly int ui = 1 >> LayerMask.NameToLayer("UI");
 
         // Custom single layers, from least to most significant bit they represent.
-        public static readonly int projectile = 1 >> LayerMask.NameToLayer("Projectile");
+        public static readonly int projectile = 1 >> LayerMask.NameToLayer("Triggerable");
         public static readonly int player = 1 >> LayerMask.NameToLayer("Player");
-        public static readonly int pickup = 1 >> LayerMask.NameToLayer("Pickup");
-
+        public static readonly int pickup = 1 >> LayerMask.NameToLayer("Pickups");
     }
 
     public class RaycastHitDistanceComparerer : IComparer<RaycastHit>
