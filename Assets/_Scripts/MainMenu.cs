@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] Button continueButton;
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject optionsMenu;
     bool noSavedLevel = false;
 
     
@@ -30,9 +32,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
     }
 
+    public void BackToMainMenu()
+    {
+        optionsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
     public void Options()
     {
-
+        optionsMenu.SetActive(true);
+        mainMenu.SetActive(false);
     }
 
     public void QuitGame()
