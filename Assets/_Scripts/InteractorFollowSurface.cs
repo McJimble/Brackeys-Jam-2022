@@ -2,13 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 
 // Forces an interactor to temporarily parent itself to this object
-public class CharacterMotorFollowSurface : Interactable
+public class InteractorFollowSurface : Interactable
 {
     private Dictionary<IInteractor, Transform> originalParentStore = new Dictionary<IInteractor, Transform>();
 
     protected override void Awake()
     {
         base.Awake();
+        requiresKeyPress = false;
         onEnterRadius.AddListener(RefreshInteractorParenting);
         onExitRadiusNU += UnparentInteractor;
     }
@@ -34,11 +35,13 @@ public class CharacterMotorFollowSurface : Interactable
 
     public override bool FulfillsEnterRadiusParams(IInteractor interactor)
     {
+        if (interactor == null) return false;
         return interactor.CanInterchangeParents && this.CanBeInteracted;
     }
 
     public override bool FulfillsExitRadiusParams(IInteractor interactor)
     {
+        if (interactor == null) return false;
         return interactor.CanInterchangeParents && this.CanBeInteracted;
     }
 }

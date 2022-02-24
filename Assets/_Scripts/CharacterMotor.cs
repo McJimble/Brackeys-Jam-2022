@@ -25,7 +25,8 @@ public class CharacterMotor : MonoBehaviour
     [SerializeField] private float stepDisplaceLerp = 0.9f;
 
     [Header("Movement Stats")]
-    
+
+    [SerializeField] private float stepHeight = 0.3f;
     [Tooltip("Time after character has become ungrounded in which they can still jump.")]
     [SerializeField] private float coyoteTime = 0.2f;
     [Tooltip("Buffer time where jump attempts still try to go through while jumping conditions are not currently met")]
@@ -143,6 +144,7 @@ public class CharacterMotor : MonoBehaviour
 
         groundedRay.origin = capsule.center + rb.position + GROUND_RAY_OFFSET;
         groundedRay.direction = Vector3.down;
+        groundedHitInfo.point = Vector3.zero;
         float rayLength = (groundCheckHeight + PhysicsUtils.GetCapsuleScaledHeight(capsule) / 2) + GROUND_RAY_OFFSET.y;
 
         // Sphere cast check for grounded; if detected point slightly above ground check distance, add displacement vertically so the body
@@ -161,7 +163,7 @@ public class CharacterMotor : MonoBehaviour
             }
 
             float capsuleBottomY = PhysicsUtils.GetCapsuleBottomWorld(capsule).y;
-            if (groundedHitInfo.point.y > capsuleBottomY && Vector3.Dot(groundedHitInfo.normal, Vector3.up) > 0.99f)
+            if ((groundedHitInfo.point.y > capsuleBottomY) && (groundedHitInfo.point.y < capsuleBottomY + stepHeight) && Vector3.Dot(groundedHitInfo.normal, Vector3.up) > 0.99f)
             {
                 float yDisplacement = Mathf.Lerp(0f, (groundedHitInfo.point.y - capsuleBottomY), stepDisplaceLerp);
                 displacementThisFrame.y += yDisplacement;

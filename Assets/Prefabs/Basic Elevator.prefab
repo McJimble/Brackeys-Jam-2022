@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7983680294698536698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.89, z: 0}
+  m_LocalPosition: {x: -0.12, y: 5.89, z: -0.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,6 +76,9 @@ GameObject:
   - component: {fileID: 7983680294840804706}
   - component: {fileID: 7983680294840804637}
   - component: {fileID: 7983680294840804636}
+  - component: {fileID: 1492968772}
+  - component: {fileID: 1492968773}
+  - component: {fileID: 1492968771}
   m_Layer: 0
   m_Name: Moving Platform
   m_TagString: Untagged
@@ -91,7 +94,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7983680294840804639}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.14, z: -0.16}
+  m_LocalPosition: {x: 0, y: 5.86, z: -0.16}
   m_LocalScale: {x: 0.91, y: 0.91, z: 0.91}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1566,7 +1569,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2318
+  m_VersionIndex: 2360
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1663,6 +1666,59 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!54 &1492968772
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983680294840804639}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 1
+--- !u!65 &1492968773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983680294840804639}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.5007973, y: 0.34990188, z: 6.2819014}
+  m_Center: {x: -0.038059715, y: -0.06, z: 0.12035526}
+--- !u!114 &1492968771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983680294840804639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c405f4098b4634b41aad50f7cf2365b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  automaticallyTrackPlayers: 1
+  requiresKeyPress: 1
+  outlineEffect: {fileID: 0}
+  onEnterRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitRadius:
+    m_PersistentCalls:
+      m_Calls: []
+  onInteract:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7983680295387979643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1709,19 +1765,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e3651fe258855478b0d33cfa1c0619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  automaticallyTrackPlayers: 1
   requiresKeyPress: 0
+  outlineEffect: {fileID: 0}
   onEnterRadius:
     m_PersistentCalls:
       m_Calls: []
   onExitRadius:
     m_PersistentCalls:
       m_Calls: []
-  onInterract:
+  onInteract:
     m_PersistentCalls:
       m_Calls: []
   elevatorTransform: {fileID: 7983680294840804705}
-  followPath: 0
-  pathIndex: 0
+  followPath: 1
+  canOverrideCurrentMovement: 1
+  pathIndex: 1
   movePathInfos:
   - delayTime: 3
     moveToTransform: {fileID: 7983680294698536699}
@@ -1758,7 +1817,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 0
-  - delayTime: 2
+  - delayTime: 100000
     moveToTransform: {fileID: 7983680294170805750}
     moveToCurve:
       serializedVersion: 2
