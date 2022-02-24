@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Elevator : Interactable
 {
     [System.Serializable]
@@ -49,7 +48,7 @@ public class Elevator : Interactable
             return false;
         }
         // If set to position it's already moving to, do nothing
-        else if (currentTimedInfo == moveInfo)
+        else if (currentTimedInfo == moveInfo && !canOverrideCurrentMovement)
         {
             Debug.LogWarning("Trying to move platform to position it is already moving to");
             return false;
@@ -132,6 +131,7 @@ public class Elevator : Interactable
     public void SetNextMoveToInstant(int index)
     {
         pathIndex = System.Math.Clamp(index, 0, movePathInfos.Length - 1);
+        currentTimedInfo = null;
         SetNextMoveTo(movePathInfos[index], false);
     }
 
@@ -140,6 +140,7 @@ public class Elevator : Interactable
         int nextIndexToTry = (pathIndex + 1) % movePathInfos.Length;
         if (!CanMoveNext(movePathInfos[nextIndexToTry])) return;
 
+        currentTimedInfo = null;
         pathIndex = nextIndexToTry;
         SetNextMoveTo(movePathInfos[pathIndex], false);
     }
