@@ -43,7 +43,9 @@ public class KillPlayerInteractible : Interactable
 
     public void KillPlayer(Player player)
     {
-        CinemachineShake.Instance.ShakeCamera(10f, .7f);
+        player.DeathParticle.transform.position = player.transform.position;
+        player.DeathParticle.Play();
         StartCoroutine(RespawnPlayer(player));
+        CinemachineShake.Instance.ShakeCamera(10f, .7f);
     }
 }

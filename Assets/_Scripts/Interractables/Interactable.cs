@@ -57,7 +57,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual bool FulfillsExitRadiusParams(IInteractor interactor)
     {
-        return !(interactor == null || currentlyInteractingObjects.Contains(interactor));
+        return !(interactor == null || !currentlyInteractingObjects.Contains(interactor));
     }
 
     public virtual bool TryInteract(IInteractor interactor)
@@ -88,9 +88,11 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void OnTriggerExit(Collider other)
     {
+        
         // If other interactor exists in our table that we build on enter, then remove it now.
         IInteractor otherInteractor = other.GetComponent<IInteractor>();
         if (!FulfillsExitRadiusParams(otherInteractor)) return;
+        Debug.Log("PASSED1");
 
         currentlyInteractingObjects.Remove(otherInteractor);
         InvokeExitRadius(otherInteractor);

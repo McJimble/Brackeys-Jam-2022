@@ -79,6 +79,12 @@ public class DoorMover : Interactable
         StartCoroutine(OpenLerpDoor());
     }
 
+    public void CloseDoor()
+    {
+        if (doorState == DoorState.closed) return;
+        StartCoroutine(CloseLerpDoor());
+    }
+
     public void TriggerDoor()
     {
       
