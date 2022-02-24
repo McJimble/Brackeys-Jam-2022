@@ -14,6 +14,7 @@ public class Player : MonoBehaviour, IInteractor
     private Transform cameraObject;
     private bool faceMovementDirection = true;
 
+    [SerializeField] private ParticleSystem deathParticle;
     [SerializeField] private List<Interactable> inRangeInteractables;
     [SerializeField] private BasePickup heldPickup;
     private BehaviourDistanceComparerer distanceComparerer;
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour, IInteractor
     public CharacterInputs CharacterInputs { get => characterInputs; }
     public Transform SpawnPoint { get => spawnPoint; }
     public Transform ShovePoint { get => shoveToPoint;  }
-
+    public ParticleSystem DeathParticle { get => deathParticle; }
     public CharacterMotor AttachedMotor { get => characterMotor; }
     public bool FaceMovementDirection { get => faceMovementDirection; set => faceMovementDirection = value; }
 
