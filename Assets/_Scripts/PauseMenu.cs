@@ -8,12 +8,13 @@ public class PauseMenu : MonoBehaviour
     public static bool isGamePaused = false;
     public float gameTimeScale = 1f;
     Player player;
-
+    AudioSource audioSource;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         player = FindObjectOfType<Player>();
     }
     private void Update()
@@ -34,6 +35,9 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        audioSource.Play();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         pauseMenu.SetActive(false);
         Time.timeScale = gameTimeScale;
         isGamePaused = false;
@@ -42,12 +46,16 @@ public class PauseMenu : MonoBehaviour
 
     public void OptionMenu()
     {
+        audioSource.Play();
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(true);
     }
 
     private void PauseGame()
     {
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         pauseMenu.SetActive(true);
         Time.timeScale = 0;
         isGamePaused = true;
@@ -55,12 +63,14 @@ public class PauseMenu : MonoBehaviour
     }
     public void BackToPauseMenu()
     {
+        audioSource.Play();
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
     }
 
     public void LoadMenu()
     {
+        audioSource.Play();
         isGamePaused = false;
         Time.timeScale = 1;
         PlayerPrefs.SetInt("CurrentLevel", SceneManager.GetActiveScene().buildIndex);

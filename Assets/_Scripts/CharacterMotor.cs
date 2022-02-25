@@ -39,6 +39,8 @@ public class CharacterMotor : MonoBehaviour
     [SerializeField] private float airControlFactor = 0.6f;
     [SerializeField] private float groundedDrag = 3f;
     [SerializeField] private float airDrag = 6f;
+ 
+  
 
    
     private Vector3 moveVelocity;
@@ -70,6 +72,7 @@ public class CharacterMotor : MonoBehaviour
 
     private void Awake()
     {
+      
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
 
@@ -158,6 +161,8 @@ public class CharacterMotor : MonoBehaviour
                 if (!PhysicsUtils.NonAllocRaycasts[i].collider.isTrigger)
                 {
                     groundedHitInfo = PhysicsUtils.NonAllocRaycasts[i];
+                    timeAirborne = 0f;
+                    isGrounded = true;
                     break;
                 }
             }
@@ -168,8 +173,7 @@ public class CharacterMotor : MonoBehaviour
                 float yDisplacement = Mathf.Lerp(0f, (groundedHitInfo.point.y - capsuleBottomY), stepDisplaceLerp);
                 displacementThisFrame.y += yDisplacement;
             }
-            timeAirborne = 0f;
-            isGrounded = true;
+           
         }
         else
             isGrounded = false;
@@ -188,8 +192,9 @@ public class CharacterMotor : MonoBehaviour
         moveVelocity += vel;
     }
     
-    public void StartJump(bool resetYVel = true)
+    public bool StartJump(bool resetYVel = true)
     {
+        
         jumpBufferTimeRemaining = jumpBufferTime;
 
         // Jump if input was buffered and coyote time is satisfied.
@@ -202,9 +207,11 @@ public class CharacterMotor : MonoBehaviour
 
             if (resetYVel)
                 rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-
+           
             rb.AddForce(jumpSpeed * Vector3.up, ForceMode.Impulse);
+            return true;
         }
+        return false;
     }
 
     private void ResetRBVerticalVelocity()
@@ -213,4 +220,6 @@ public class CharacterMotor : MonoBehaviour
         newVel.y = 0f;
         rb.velocity = newVel;
     }
+
+  
 }

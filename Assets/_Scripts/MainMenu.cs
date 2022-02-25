@@ -9,9 +9,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Button continueButton;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject optionsMenu;
+    AudioSource audioSource;
     bool noSavedLevel = false;
 
-    
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void Start()
     {
         if (PlayerPrefs.GetInt("CurrentLevel") == 0)
@@ -22,30 +26,37 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame()
     {
+        audioSource.Play();
+        mainMenu.SetActive(false);
         noSavedLevel = false;
         SceneManager.LoadScene(1);
     }
 
     public void ContinueGame()
-    {
+    {  
         if (noSavedLevel) return;
+        audioSource.Play();
+        mainMenu.SetActive(false);
         SceneManager.LoadScene(PlayerPrefs.GetInt("CurrentLevel"));
     }
 
     public void BackToMainMenu()
     {
+        audioSource.Play();
         optionsMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
 
     public void Options()
     {
+        audioSource.Play();
         optionsMenu.SetActive(true);
         mainMenu.SetActive(false);
     }
 
     public void QuitGame()
     {
+        audioSource.Play();
         Application.Quit();
         Debug.Log("Quitting");
     }
