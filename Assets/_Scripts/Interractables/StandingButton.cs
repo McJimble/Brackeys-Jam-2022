@@ -3,13 +3,13 @@ using System.Collections;
 
 public class StandingButton : Interactable
 {
-    
+
     [Header("Visual Settings")]
     [SerializeField] private AnimationCurve pushInCurve;
     [SerializeField] private AnimationCurve pullOutCurve;
     [SerializeField] private Transform pushButtonTransform;
     [SerializeField] private float moveAmountY = 0.05f;
-    
+
     public override bool TryInteract(IInteractor interactor)
     {
         if (!base.TryInteract(interactor))
@@ -17,7 +17,7 @@ public class StandingButton : Interactable
             Debug.Log("Could not interact with " + gameObject.name);
             return false;
         }
-            CurrentlyInteracting = true;
+        CurrentlyInteracting = true;
         StopAllCoroutines();
         StartCoroutine(ButtonPushAnimation(interactor));
         return true;
@@ -25,7 +25,7 @@ public class StandingButton : Interactable
 
     private IEnumerator ButtonPushAnimation(IInteractor pushInteractor)
     {
-        
+
         Vector3 buttonOriginalPosition = pushButtonTransform.position;
         Vector3 endPosition = pushButtonTransform.position + (pushButtonTransform.up * -moveAmountY);
         float pushInTime = pushInCurve.keys[pushInCurve.length - 1].time;
@@ -53,5 +53,6 @@ public class StandingButton : Interactable
         }
         CurrentlyInteracting = false;
     }
+
 
 }
