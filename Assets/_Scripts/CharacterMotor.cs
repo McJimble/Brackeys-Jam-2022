@@ -158,6 +158,8 @@ public class CharacterMotor : MonoBehaviour
                 if (!PhysicsUtils.NonAllocRaycasts[i].collider.isTrigger)
                 {
                     groundedHitInfo = PhysicsUtils.NonAllocRaycasts[i];
+                    timeAirborne = 0f;
+                    isGrounded = true;
                     break;
                 }
             }
@@ -167,9 +169,9 @@ public class CharacterMotor : MonoBehaviour
             {
                 float yDisplacement = Mathf.Lerp(0f, (groundedHitInfo.point.y - capsuleBottomY), stepDisplaceLerp);
                 displacementThisFrame.y += yDisplacement;
+                Debug.Log("stepping up");
             }
-            timeAirborne = 0f;
-            isGrounded = true;
+
         }
         else
             isGrounded = false;
