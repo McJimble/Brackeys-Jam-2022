@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class KillPlayerInteractible : Interactable
 {
+    
     public override bool TryInteract(IInteractor interactor)
     {
         if (!base.TryInteract(interactor)) return false;
@@ -16,6 +17,7 @@ public class KillPlayerInteractible : Interactable
 
     public IEnumerator RespawnPlayer(Player player)
     {
+        
         float timeElapsed = 0;
         player.gameObject.SetActive(false);
         
@@ -45,6 +47,7 @@ public class KillPlayerInteractible : Interactable
     {
         player.DeathParticle.transform.position = player.transform.position;
         player.DeathParticle.Play();
+        ExplosionSFX.Instance.PlayExplosion();
         StartCoroutine(RespawnPlayer(player));
         CinemachineShake.Instance.ShakeCamera(10f, .7f);
     }

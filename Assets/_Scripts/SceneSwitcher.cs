@@ -6,16 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    
+    AudioSource audioSource;
     [SerializeField] int sceneToLoad = -1;
     Player player;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
 
         if (other.TryGetComponent<Player>(out player))
         {
-
+            audioSource.Play();
 
             StartCoroutine(LoadNextScene());
 

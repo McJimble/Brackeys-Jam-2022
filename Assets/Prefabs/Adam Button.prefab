@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3894
+  m_VersionIndex: 3933
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1157,7 +1157,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726347572215422918}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 26d3d6a746e9a2347be40b01cb0d47f2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -2228,7 +2228,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1412
+  m_VersionIndex: 1451
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2340,7 +2340,8 @@ GameObject:
   - component: {fileID: 2857027697808841380}
   - component: {fileID: 1575308656545099486}
   - component: {fileID: 7123429718930373459}
-  m_Layer: 0
+  - component: {fileID: 1991945367}
+  m_Layer: 6
   m_Name: Adam Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2354,7 +2355,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7097480909610216697}
-  m_LocalRotation: {x: -0, y: -0.6727826, z: -0, w: 0.73984027}
+  m_LocalRotation: {x: 0, y: -0.67278016, z: 0, w: 0.73984253}
   m_LocalPosition: {x: 5.95, y: 2.31524, z: -1.43}
   m_LocalScale: {x: 1.5392, y: 1.5392, z: 1.5392}
   m_ConstrainProportionsScale: 0
@@ -2406,16 +2407,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5523bccfdfcd37040bf3f1f8d8295fbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  automaticallyTrackPlayers: 1
   requiresKeyPress: 1
+  outlineEffect: {fileID: 1991945367}
   onEnterRadius:
     m_PersistentCalls:
       m_Calls: []
   onExitRadius:
     m_PersistentCalls:
       m_Calls: []
-  onInterract:
+  onInteract:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Elevator, Assembly-CSharp
+        m_MethodName: SetNextMoveToInstant
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: Elevator, Assembly-CSharp
+        m_MethodName: set_FollowPath
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   pushInCurve:
     serializedVersion: 2
     m_Curve:
@@ -2502,3 +2529,21 @@ MonoBehaviour:
     m_RotationOrder: 4
   pushButtonTransform: {fileID: 5026542382567220435}
   moveAmountY: 0.05
+--- !u!114 &1991945367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7097480909610216697}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.9091798, b: 0, a: 1}
+  outlineWidth: 4.96
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
