@@ -7,7 +7,7 @@ public class BasePickup : Interactable, IInteractor
     [SerializeField] private SphereCollider pickupRangeTrigger;
     public bool CanInterchangeParents => true;
 
-    public bool CanInteract => interactingPlayer != null;
+    public bool CanInteract => interactingPlayer == null;
     public Transform InteractingTransform => transform;
     public Rigidbody InteractingRB => AttachedRB;
 

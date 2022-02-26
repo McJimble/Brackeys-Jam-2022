@@ -16,6 +16,7 @@ public class Player : MonoBehaviour, IInteractor
     private CharacterInputs characterInputs;
     private CharacterMotor characterMotor;
     private Transform cameraObject;
+    private OnScreenUI onScreenUI;
     private float panicTimer = 0;
     private bool faceMovementDirection = true;
 
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour, IInteractor
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        onScreenUI = FindObjectOfType<OnScreenUI>();
         audioSource = GetComponent<AudioSource>();
         distanceComparerer = new BehaviourDistanceComparerer(transform);
         inRangeInteractables = new List<Interactable>();
@@ -202,7 +204,7 @@ public class Player : MonoBehaviour, IInteractor
         ExplosionSFX.Instance.PlayExplosion();
         CinemachineShake.Instance.ShakeCamera(10f, .7f);
         LevelManager.Instance.RespawnPlayer(this);
-
+        onScreenUI.IncreaseDeathCounter();
         OnPlayerDeath?.Invoke(this);
     }
 }

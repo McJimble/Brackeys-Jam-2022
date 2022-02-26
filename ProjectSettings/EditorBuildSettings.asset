@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels/MenuScene.unity
     guid: 7a54a378645da8845a78c1a4d28cc3cb
   - enabled: 1
-    path: Assets/Scenes/NewAdamTestScene 1.unity
+    path: Assets/Scenes/Levels/Level 1.unity
     guid: 01282f8ac002161468bc6422743624b9
   - enabled: 1
-    path: Assets/Scenes/Level 2.unity
-    guid: 5de14d1a9128775488262deba8184a49
+    path: Assets/Scenes/Levels/Level 2.unity
+    guid: bb428bb2e54efa944b2601f12de62bdb
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 3.unity
+    guid: 73e6f412791c59743a097eb19fd75474
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level 4.unity
+    guid: c8984b0a874e0a74ea163de1352f2eea
   m_configObjects: {}

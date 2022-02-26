@@ -72,4 +72,27 @@ public class PressurePlate : Interactable
         }
         CurrentlyInteracting = false;
     }
+
+    protected override void OnTriggerExit(Collider other)
+    {
+        // If other interactor exists in our table that we build on enter, then remove it now.
+        IInteractor otherInteractor = other.GetComponent<IInteractor>();
+        if (!FulfillsExitRadiusParams(otherInteractor)) return;
+        Debug.Log("PASSED1");
+
+        currentlyInteractingObjects.Remove(otherInteractor);
+       
+
+        if (!automaticallyTrackPlayers) return;
+
+        Player player;
+        if (other.TryGetComponent<Player>(out player) && player == interactingPlayer)
+        {
+            interactingPlayer = null;
+        }
+        if (currentlyInteractingObjects.Count == 0)
+        {
+            InvokeExitRadius(null);
+        }
+    }
 }

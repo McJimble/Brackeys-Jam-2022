@@ -40,13 +40,12 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        //audioSource.Play();
+        audioSource.Play();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenu.SetActive(false);
         Time.timeScale = gameTimeScale;
-        isGamePaused = false;
-       
+        isGamePaused = false;   
     }
 
 

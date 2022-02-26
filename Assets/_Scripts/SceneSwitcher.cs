@@ -64,9 +64,10 @@ public class SceneSwitcher : MonoBehaviour
             Debug.LogError("Scene to load not set.");
             yield break;
         }
+        LevelManager.Instance.NextLevel();
 
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
-
+        
         Destroy(this.gameObject);
     }
 

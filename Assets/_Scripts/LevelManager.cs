@@ -45,9 +45,10 @@ public class LevelManager : MonoBehaviour
             instance = this;
         else
         {
-            Debug.LogError("Destroying extra GameManager component; please make sure this causes no errors.");
-            Destroy(this);
+            
+            Destroy(this.gameObject);
         }
+        DontDestroyOnLoad(this);
 
         TimeSpentInCurrentLevel = 0f;
         currentLevel = GetLevelNumberFromCurrentScene();
@@ -97,5 +98,10 @@ public class LevelManager : MonoBehaviour
 
         player.transform.position = player.ShovePoint.position;
         player.CharacterInputs.Enable();
+    }
+
+    public void NextLevel()
+    {
+        ++currentLevel;
     }
 }
