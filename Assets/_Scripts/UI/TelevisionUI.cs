@@ -81,10 +81,15 @@ public class TelevisionUI : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Player.OnPlayerDeath -= DisplaySadOnDeath;
+    }
+
     public void InitGenericDisplay()
     {
         ResetToNormalFace();
-
+    
         levelTitleText.text = LevelManager.Instance.LevelName;
         levelNumberText.text = LevelManager.Instance.LevelNumber.ToString("00");
     }
