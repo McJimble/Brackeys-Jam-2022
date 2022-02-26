@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-public class VolmeControl : MonoBehaviour
+
+public class VolumeControl : MonoBehaviour
 {
     [SerializeField] string _volumeParameter = "MasterVolume";
     [SerializeField] AudioMixer _mixer;

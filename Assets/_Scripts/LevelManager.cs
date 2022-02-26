@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 /// <summary>
 /// Controls level-specific scripting among typical game manager things.
@@ -18,6 +19,7 @@ public class LevelManager : MonoBehaviour
     [Header("Required")]
     [SerializeField] private int levelNumber;
     [SerializeField] private string levelName;
+
     public float TimeSpentInCurrentLevel { get; private set; }
     public int LevelNumber { get => levelNumber; }
     public string LevelName { get => levelName; }
@@ -42,11 +44,42 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     private void Update()
     {
         TimeSpentInCurrentLevel += Time.deltaTime;
+    }
+
+    public void RespawnPlayer(Player player)
+    {
+        StartCoroutine(RespawnPlayerSequence(player));
+    }
+
+    private IEnumerator RespawnPlayerSequence(Player player)
+    {
+        float timeElapsed = 0;
+        player.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        player.transform.position = player.SpawnPoint.position;
+
+        player.gameObject.SetActive(true);
+        player.AttachedMotor.AttachedRB.velocity = Vector3.zero;
+        player.CharacterInputs.Disable();
+
+
+        yield return new WaitForSeconds(.75f);
+        while (timeElapsed < .5f)
+        {
+
+            player.transform.position = Vector3.Lerp(player.SpawnPoint.position, player.ShovePoint.position, timeElapsed / .5f);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        player.transform.position = player.ShovePoint.position;
+        player.CharacterInputs.Enable();
     }
 }

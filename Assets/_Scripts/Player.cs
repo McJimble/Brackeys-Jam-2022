@@ -10,14 +10,13 @@ public class Player : MonoBehaviour, IInteractor
     [SerializeField] Transform shoveToPoint;
     [SerializeField] AudioClip jumpSFX;
 
-
-
     private AudioSource audioSource;
     private CharacterInputs characterInputs;
     private CharacterMotor characterMotor;
     private Transform cameraObject;
     private bool faceMovementDirection = true;
 
+    public static event System.Action<Player> OnPlayerDeath;
 
     [SerializeField] private ParticleSystem deathParticle;
     [SerializeField] private List<Interactable> inRangeInteractables;
@@ -32,9 +31,9 @@ public class Player : MonoBehaviour, IInteractor
     // ----------------------------
     public CharacterInputs CharacterInputs { get => characterInputs; }
     public Transform SpawnPoint { get => spawnPoint; }
-    public Transform ShovePoint { get => shoveToPoint;  }
+    public Transform ShovePoint { get => shoveToPoint; }
     public ParticleSystem DeathParticle { get => deathParticle; }
-  
+
     public CharacterMotor AttachedMotor { get => characterMotor; }
     public bool FaceMovementDirection { get => faceMovementDirection; set => faceMovementDirection = value; }
 
@@ -56,7 +55,7 @@ public class Player : MonoBehaviour, IInteractor
         characterInputs = new CharacterInputs();
         characterInputs.Player.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
         characterInputs.Player.Interact.performed += i => AttemptInterract();
-        
+
         characterInputs.Enable();
     }
     private void OnDisable()
@@ -75,7 +74,7 @@ public class Player : MonoBehaviour, IInteractor
                 audioSource.clip = jumpSFX;
                 audioSource.Play();
             }
-            
+
         }
 
         if (faceMovementDirection && movementInput != Vector2.zero)
@@ -170,5 +169,14 @@ public class Player : MonoBehaviour, IInteractor
         movementInput = Vector2.zero;
     }
 
-  
+    public void KillPlayer()
+    {
+        DeathParticle.transform.position = transform.position;
+        DeathParticle.Play();
+        ExplosionSFX.Instance.PlayExplosion();
+        CinemachineShake.Instance.ShakeCamera(10f, .7f);
+        LevelManager.Instance.RespawnPlayer(this);
+
+        OnPlayerDeath?.Invoke(this);
+    }
 }
