@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,13 @@ public class PauseMenu : MonoBehaviour
     public float gameTimeScale = 1f;
     Player player;
     AudioSource audioSource;
+    OnScreenUI onScreenUI;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject optionsMenu;
 
     private void Awake()
     {
+        onScreenUI = FindObjectOfType<OnScreenUI>();
         audioSource = GetComponent<AudioSource>();
         player = FindObjectOfType<Player>();
     }
@@ -33,6 +36,8 @@ public class PauseMenu : MonoBehaviour
     }
 
 
+
+
     public void ResumeGame()
     {
         //audioSource.Play();
@@ -43,6 +48,8 @@ public class PauseMenu : MonoBehaviour
         isGamePaused = false;
        
     }
+
+
 
     public void OptionMenu()
     {
@@ -68,12 +75,24 @@ public class PauseMenu : MonoBehaviour
         optionsMenu.SetActive(false);
     }
 
+    public void RestartLevel()
+    {
+        ReloadScene();
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ResumeGame();
+    }
+
     public void LoadMenu()
     {
         audioSource.Play();
         isGamePaused = false;
         Time.timeScale = 1;
         PlayerPrefs.SetInt("CurrentLevel", SceneManager.GetActiveScene().buildIndex);
+        
         SceneManager.LoadScene(0);
     }
 

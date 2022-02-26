@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,12 @@ public class Player : MonoBehaviour, IInteractor
     [SerializeField] Transform shoveToPoint;
     [SerializeField] AudioClip jumpSFX;
 
+    
     private AudioSource audioSource;
     private CharacterInputs characterInputs;
     private CharacterMotor characterMotor;
     private Transform cameraObject;
+    private float panicTimer = 0;
     private bool faceMovementDirection = true;
 
     public static event System.Action<Player> OnPlayerDeath;
@@ -69,17 +72,38 @@ public class Player : MonoBehaviour, IInteractor
     {
         if (characterInputs.Player.Actions.triggered)
         {
+
             if (characterMotor.StartJump())
             {
                 audioSource.clip = jumpSFX;
                 audioSource.Play();
             }
-
         }
+
+        CheckPanic();
+               
+               
+        
 
         if (faceMovementDirection && movementInput != Vector2.zero)
         {
             transform.LookAt(transform.position + SetMovementFromInput().normalized, Vector3.up);
+        }
+    }
+
+    private void CheckPanic()
+    {
+        bool isRKeyHeld = characterInputs.Player.Panic.ReadValue<float>() > 0.1f;
+
+        if (isRKeyHeld)
+        {
+            panicTimer += Time.deltaTime;
+            CinemachineShake.Instance.ShakeCamera(2f, .1f);
+            if (panicTimer > 1.5f)
+            {
+                KillPlayer();
+                panicTimer = 0;
+            }
         }
     }
 
@@ -112,6 +136,8 @@ public class Player : MonoBehaviour, IInteractor
             interactableObj.ToggleInteractAvailableEffect(false);
         }
     }
+
+  
 
     private void AttemptInterract()
     {
