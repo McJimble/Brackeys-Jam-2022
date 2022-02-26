@@ -109,7 +109,6 @@ public class GameBackground : MonoBehaviour
         {
             int randElement = Random.Range(0, remainingPositions.Count - 1);
             int randValue = remainingPositions[randElement];
-            Debug.Log(randValue);
             remainingPositions.RemoveAt(randElement);
 
             spawnedStars[i] = Instantiate(starPrefab, backgroundStarPositions[randValue].position, Random.rotation, backgroundStarPositions[randValue]);

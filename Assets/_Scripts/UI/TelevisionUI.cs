@@ -6,6 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(Canvas), typeof(AudioSource))]
 public class TelevisionUI : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem onWinParticleSystem;
     [SerializeField] private ScrollingRawImage backgroundImage;
     [SerializeField] private RawImage backgroundColorImage;
     [Space]
@@ -14,8 +15,9 @@ public class TelevisionUI : MonoBehaviour
     [SerializeField] private RawImage normalFace;
     [SerializeField] private RawImage happyFace;
     [Min(0f)]
-    [SerializeField] private float imgBlinkSpeed = 0.18f;
+    [SerializeField] private float imgBlinkTime = 0.18f;
     [Space]
+    [SerializeField] private TextMeshProUGUI levelPrefixText;
     [SerializeField] private TextMeshProUGUI levelTitleText;
     [SerializeField] private TextMeshProUGUI levelNumberText;
     [Space]
@@ -26,12 +28,21 @@ public class TelevisionUI : MonoBehaviour
     [SerializeField] private float emissionIntensitySpeed = 10f;
 
     public ScrollingRawImage BackgroundImage { get => backgroundImage; }
-    public float ImgBlinkSpeed { get => imgBlinkSpeed; set => imgBlinkSpeed = value; }
-
+    public float ImgBlinkSpeed { get => imgBlinkTime; set => imgBlinkTime = value; }
+    public bool Blinking
+    {
+        get => blinking;
+        set
+        {
+            blinking = value;
+            timeUntilNextBlink = imgBlinkTime;
+        }
+    }
     private Canvas mainCanvas;
     private AudioSource audioSrc;
     private RawImage activeImage;
-    private bool activeImageVisible = true;
+    private float timeUntilNextBlink = 0f;
+    private bool blinking = false;
 
     private void OnValidate()
     {
@@ -44,6 +55,10 @@ public class TelevisionUI : MonoBehaviour
         audioSrc = GetComponent<AudioSource>();
 
         activeImage = normalFace;
+        timeUntilNextBlink = imgBlinkTime;
+        Blinking = true;
+
+        Player.OnPlayerDeath += DisplaySadOnDeath;
     }
 
     private void Start()
@@ -55,7 +70,15 @@ public class TelevisionUI : MonoBehaviour
     {
         tvEmissionLight.intensity = Mathf.PingPong(Time.time * emissionIntensitySpeed, maxEmissionIntensity - minEmissionIntensity) + minEmissionIntensity;
 
-
+        if (Blinking)
+        {
+            if (timeUntilNextBlink <= 0f)
+            {
+                faceIconMask.SetActive(!faceIconMask.activeInHierarchy);
+                timeUntilNextBlink = imgBlinkTime;
+            }
+            timeUntilNextBlink -= Time.deltaTime;
+        }
     }
 
     public void InitGenericDisplay()
@@ -72,10 +95,10 @@ public class TelevisionUI : MonoBehaviour
         StartCoroutine(SadFaceRoutine(dispTime));
     }
 
-    public void PlayHappyFace()
+    public void PlayHappyFace(float dispTime = -1f, float timeUntilBlink = -1f)
     {
         StopAllCoroutines();
-        StartCoroutine(HappyFaceRoutine());
+        StartCoroutine(HappyFaceRoutine(dispTime, timeUntilBlink));
     }
 
     public void ResetToNormalFace()
@@ -83,6 +106,18 @@ public class TelevisionUI : MonoBehaviour
         sadFace.transform.gameObject.SetActive(false);
         happyFace.transform.gameObject.SetActive(false);
         normalFace.transform.gameObject.SetActive(true);
+        Blinking = false;
+    }
+
+    private void DisplaySadOnDeath(Player player)
+    {
+        PlaySadFace(1f);
+    }
+
+    // TODO: subscribe this to LevelManager
+    private void DisplayHappyOnWin()
+    {
+        
     }
 
     private IEnumerator SadFaceRoutine(float dispTime)
@@ -97,7 +132,6 @@ public class TelevisionUI : MonoBehaviour
         yield return waitTime;
 
         sadFace.transform.gameObject.SetActive(false);
-        happyFace.transform.gameObject.SetActive(false);
         normalFace.transform.gameObject.SetActive(true);
         SetActiveImage(normalFace);
     }
@@ -109,11 +143,14 @@ public class TelevisionUI : MonoBehaviour
         happyFace.transform.gameObject.SetActive(true);
         SetActiveImage(happyFace);
 
+        onWinParticleSystem.Play();
 
         if (timeUntilBlink >= 0f)
         {
             WaitForSeconds waitUntilBlink = new WaitForSeconds(timeUntilBlink);
             yield return waitUntilBlink;
+
+            Blinking = true;
         }
 
         if (dispTime >= 0f)
@@ -121,16 +158,11 @@ public class TelevisionUI : MonoBehaviour
             WaitForSeconds waitTime = new WaitForSeconds(dispTime);
             yield return waitTime;
         }
-
-        happyFace.transform.gameObject.SetActive(false);
-        normalFace.transform.gameObject.SetActive(true);
-        SetActiveImage(normalFace);
     }
 
     private void SetActiveImage(RawImage img)
     {
         activeImage = img;
-        activeImageVisible = true;
     }
 
     public void PlayClipFromTV(AudioClip clip)

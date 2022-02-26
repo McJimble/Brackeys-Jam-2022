@@ -16,7 +16,7 @@ Shader "Custom/Outline Fill" {
 
   SubShader {
     Tags {
-      "Queue" = "Transparent+110"
+      "Queue" = "Transparent-2"
       "RenderType" = "Transparent"
       "DisableBatching" = "True"
     }

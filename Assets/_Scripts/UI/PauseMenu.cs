@@ -35,7 +35,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        audioSource.Play();
+        //audioSource.Play();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseMenu.SetActive(false);
