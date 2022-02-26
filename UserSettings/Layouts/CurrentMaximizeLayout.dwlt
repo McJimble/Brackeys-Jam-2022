@@ -85,7 +85,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -806,8 +806,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ce90daff
-      m_LastClickedID: -2453298
+      m_SelectedIDs: 48600900466009004a600900
+      m_LastClickedID: 0
       m_ExpandedIDs: ce90dafff496dbfffe96dbffa2d2e0ffd4dfe0ffbae0e0ffc6e4e0ff2ce8e0ffd6eae0ffe010e1ffea10e1ff5a15e1ff361ce1ff7820e1ffde31e1ff6c33e1ff8843e1ffee54e1ffc665e1ff2c77e1ff0888e1ff2098e1fff8a8e1ff0cbbe1ffd6fbe1ff0a06e2ff9208ecff26b2eeff2ab2eeff56b2eeff6eb2eeffc2b2eeff1eb6eeff52c0eeff9ca8f6ff6aabf7ff74abf7ff6475f8ffd8dbf8ff34ecf8ffa8fdf8ff0c9ffaffe0a2faff2ca5faff08a7faffdca9faff24acfaff98affaff50bbfaff1ecefaff66d0faff66d4faffcad6faff0cdffaff2ce1faff50e3faffc8e8faffaaf1faff0807fbffe048fbff6655fcff28cbffffb6ccffff64faffff0684000010ca030026840500d0850500d8870500ea8805008a370900
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: AnimationWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -879,16 +879,16 @@ MonoBehaviour:
     y: 580
     width: 1452
     height: 367
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 17}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
   - {fileID: 15}
   - {fileID: 16}
   - {fileID: 17}
-  m_Selected: 3
-  m_LastSelected: 2
+  m_Selected: 0
+  m_LastSelected: 3
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -930,13 +930,13 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Animation/Player
+    - Assets/Materials/Interactables
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Animation/Player
+  - Assets/Materials/Interactables
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\black\Desktop\Game Dev\Unity Projects\Brackeys Jam
     2021
@@ -944,8 +944,8 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 180}
-    m_SelectedIDs: eabb0a00
-    m_LastClickedID: 703466
+    m_SelectedIDs: 16860000
+    m_LastClickedID: 34326
     m_ExpandedIDs: 00000000887c00008a7c00008c7c00008e7c0000907c0000267f00002c7f00002e7f00001c8600002e8f0000d41e05004204060000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -974,7 +974,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000887c00008a7c00008c7c00008e7c0000907c0000267f00002c7f00002e7f00002e8f0000d41e050000ca9a3b
+    m_ExpandedIDs: 00000000887c00008a7c00008c7c00008e7c0000907c0000267f00002c7f00002e7f00001c8600002e8f0000d41e05004204060000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -999,10 +999,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 02010b00
-    m_LastClickedInstanceID: 721154
-    m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000f837000000000000088f000046600900
+    m_SelectedInstanceIDs: 48600900466009004a600900
+    m_LastClickedInstanceID: 614472
+    m_HadKeyboardFocusLastEvent: 0
+    m_ExpandedInstanceIDs: c6230000f837000000000000088f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1169,7 +1169,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 604042
+  m_LastSelectedObjectID: -2349448
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52

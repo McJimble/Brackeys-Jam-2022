@@ -8,11 +8,11 @@
 	}
 	SubShader
 	{
-		Tags {"Queue"="Transparent+6"}
+		Tags {"Queue"="Transparent-6"}
         // Shader code
 		Pass
         {
-			ZWrite Off
+			ZWrite On
 			Fog { Color (1, 1, 1) }
 			ColorMask RGB
 			Blend DstColor Zero

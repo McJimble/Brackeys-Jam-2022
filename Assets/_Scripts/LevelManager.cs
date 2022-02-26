@@ -96,6 +96,7 @@ public class LevelManager : MonoBehaviour
         }
 
         player.transform.position = player.ShovePoint.position;
+        player.transform.forward = Vector3.left;
         player.CharacterInputs.Enable();
     }
 }

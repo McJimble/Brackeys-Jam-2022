@@ -11,9 +11,11 @@ public class Player : MonoBehaviour, IInteractor
     [SerializeField] Transform spawnPoint;
     [SerializeField] Transform shoveToPoint;
     [SerializeField] AudioClip jumpSFX;
-
+    [Space]
     [SerializeField] private GameObject walkingMesh;
     [SerializeField] private GameObject jumpingMesh;
+    [SerializeField] private GameObject corpseOnDeath;
+    [Space]
     private Animator animator;
     private int walkingParamHash = Animator.StringToHash("isWalking");
     private int groundedParamHash = Animator.StringToHash("isGrounded");
@@ -219,8 +221,16 @@ public class Player : MonoBehaviour, IInteractor
         DeathParticle.Play();
         ExplosionSFX.Instance.PlayExplosion();
         CinemachineShake.Instance.ShakeCamera(10f, .7f);
-        LevelManager.Instance.RespawnPlayer(this);
+
+        GameObject corpse = Instantiate(corpseOnDeath, walkingMesh.transform.position, walkingMesh.transform.rotation, null);
+        Corpse corpseComp;
+        if (corpse.TryGetComponent(out corpseComp))
+        {
+            // Do extra stuff if necessary w/ corpse here.
+            corpseComp.InteractingRB.velocity = AttachedMotor.AttachedRB.velocity;
+        }
 
         OnPlayerDeath?.Invoke(this);
+        LevelManager.Instance.RespawnPlayer(this);
     }
 }
