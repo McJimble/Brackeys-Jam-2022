@@ -29,6 +29,9 @@ public class MainMenu : MonoBehaviour
         audioSource.Play();
         mainMenu.SetActive(false);
         noSavedLevel = false;
+        PlayerPrefs.DeleteKey("CurrentLevel");
+        PlayerPrefs.DeleteKey("ElapsedTime");
+        PlayerPrefs.DeleteKey("Deaths");
         SceneManager.LoadScene(1);
     }
 
