@@ -17,16 +17,26 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get => instance; }
 
     [Header("Required")]
-    [SerializeField] private int levelNumber;
-    [SerializeField] private string levelName;
+    [SerializeField] private string[] levelNames;
+
+    [Header("TEMPORARY")]
+    [SerializeField] private int debugOverrideCurrentLevel;
+
+    private int currentLevel = 1;
+    private int currentLevelName;
 
     public float TimeSpentInCurrentLevel { get; private set; }
-    public int LevelNumber { get => levelNumber; }
-    public string LevelName { get => levelName; }
+    public int LevelNumber { get => currentLevel; }
+    public string LevelName { get => levelNames[currentLevel - 1]; }
 
     public static Scene GetSceneFromLevelNumber(int levelNumber)
     {
         return SceneManager.GetSceneByBuildIndex(levelNumber + MAIN_LEVELS_FIRST_BUILD_INDEX - 1);
+    }
+
+    public static int GetLevelNumberFromCurrentScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
     }
 
     private void Awake()
@@ -40,6 +50,12 @@ public class LevelManager : MonoBehaviour
         }
 
         TimeSpentInCurrentLevel = 0f;
+        currentLevel = GetLevelNumberFromCurrentScene();
+
+        if (currentLevel >= SceneManager.sceneCountInBuildSettings)
+        {
+            currentLevel = debugOverrideCurrentLevel;
+        }
     }
 
     private void Start()
