@@ -45,8 +45,10 @@ public class LevelManager : MonoBehaviour
             instance = this;
         else
         {
-            Destroy(this);
+            
+            Destroy(this.gameObject);
         }
+        DontDestroyOnLoad(this);
 
         TimeSpentInCurrentLevel = 0f;
         currentLevel = GetLevelNumberFromCurrentScene();
@@ -66,7 +68,6 @@ public class LevelManager : MonoBehaviour
     {
         TimeSpentInCurrentLevel += Time.deltaTime;
     }
-
 
     public void RespawnPlayer(Player player)
     {
@@ -96,7 +97,11 @@ public class LevelManager : MonoBehaviour
         }
 
         player.transform.position = player.ShovePoint.position;
-        player.transform.forward = Vector3.left;
         player.CharacterInputs.Enable();
+    }
+
+    public void NextLevel()
+    {
+        ++currentLevel;
     }
 }

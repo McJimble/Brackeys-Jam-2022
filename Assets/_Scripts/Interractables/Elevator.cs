@@ -74,7 +74,7 @@ public class Elevator : Interactable
     {
         // Incase user specifies one that is too large/small.
         pathIndex = System.Math.Clamp(pathIndex, 0, movePathInfos.Length - 1);
-        transform.position = movePathInfos[pathIndex].moveToTransform.position;
+        elevatorTransform.position = movePathInfos[pathIndex].moveToTransform.position;
     }
 
     private void FixedUpdate()
