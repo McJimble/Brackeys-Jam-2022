@@ -8,7 +8,7 @@
 	}
 	SubShader
 	{
-		Tags {"Queue"="Transparent-1"}
+		Tags {"Queue"="Transparent+6"}
         // Shader code
 		Pass
         {

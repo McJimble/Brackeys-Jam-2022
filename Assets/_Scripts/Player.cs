@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour, IInteractor
 {
     [SerializeField] float movementSpeed = 10f;
@@ -11,7 +12,12 @@ public class Player : MonoBehaviour, IInteractor
     [SerializeField] Transform shoveToPoint;
     [SerializeField] AudioClip jumpSFX;
 
-    
+    [SerializeField] private GameObject walkingMesh;
+    [SerializeField] private GameObject jumpingMesh;
+    private Animator animator;
+    private int walkingParamHash = Animator.StringToHash("isWalking");
+    private int groundedParamHash = Animator.StringToHash("isGrounded");
+
     private AudioSource audioSource;
     private CharacterInputs characterInputs;
     private CharacterMotor characterMotor;
@@ -46,6 +52,7 @@ public class Player : MonoBehaviour, IInteractor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
         distanceComparerer = new BehaviourDistanceComparerer(transform);
         inRangeInteractables = new List<Interactable>();
 
@@ -58,8 +65,9 @@ public class Player : MonoBehaviour, IInteractor
         characterInputs = new CharacterInputs();
         characterInputs.Player.Movement.performed += i => movementInput = i.ReadValue<Vector2>();
         characterInputs.Player.Interact.performed += i => AttemptInterract();
-
         characterInputs.Enable();
+
+        AttachedMotor.onMotorGrounded += ResetAnimationOnGrounded;
     }
     private void OnDisable()
     {
@@ -77,18 +85,28 @@ public class Player : MonoBehaviour, IInteractor
             {
                 audioSource.clip = jumpSFX;
                 audioSource.Play();
+                jumpingMesh.SetActive(true);
+                walkingMesh.SetActive(false);
             }
         }
 
         CheckPanic();
-               
-               
-        
 
         if (faceMovementDirection && movementInput != Vector2.zero)
         {
             transform.LookAt(transform.position + SetMovementFromInput().normalized, Vector3.up);
+            animator.SetBool(walkingParamHash, true);
         }
+        else
+            animator.SetBool(walkingParamHash, false);
+
+        animator.SetBool(groundedParamHash, AttachedMotor.IsGrounded);
+    }
+
+    private void ResetAnimationOnGrounded()
+    {
+        jumpingMesh.SetActive(false);
+        walkingMesh.SetActive(true);
     }
 
     private void CheckPanic()

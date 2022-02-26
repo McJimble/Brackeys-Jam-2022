@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 2694009171803212538}
   - component: {fileID: 2694009171803212539}
   - component: {fileID: 2694009171803212532}
+  - component: {fileID: 6513532189202278138}
   - component: {fileID: 2694009171803212533}
   - component: {fileID: 2694009171803212543}
   m_Layer: 7
@@ -192,6 +193,26 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
+--- !u!95 &6513532189202278138
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694009171803212534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &2694009171803212533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +232,7 @@ MonoBehaviour:
   pullToGroundHeight: 0.02
   pullToGroundForce: 50
   stepDisplaceLerp: 0.9
+  stepHeight: 0.3
   coyoteTime: 0.2
   jumpBufferTime: 0.2
   jumpSpeed: 10
@@ -233,4 +255,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 150
   movementInput: {x: 0, y: 0}
+  spawnPoint: {fileID: 0}
+  shoveToPoint: {fileID: 0}
+  jumpSFX: {fileID: 0}
+  deathParticle: {fileID: 0}
   inRangeInteractables: []
+  heldPickup: {fileID: 0}

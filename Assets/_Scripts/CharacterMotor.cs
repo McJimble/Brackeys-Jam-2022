@@ -111,7 +111,7 @@ public class CharacterMotor : MonoBehaviour
         moveVelocity *= (isGrounded ?  1f : airControlFactor);
 
         // Final displacement of rigidbody.
-        rb.MovePosition(rb.position + displacementThisFrame);
+        rb.velocity += displacementThisFrame * Time.fixedDeltaTime;
         rb.AddForce(GetDragForce() + moveVelocity, ForceMode.Acceleration);
 
         displacementThisFrame = Vector3.zero;

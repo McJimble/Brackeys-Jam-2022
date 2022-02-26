@@ -45,7 +45,6 @@ public class LevelManager : MonoBehaviour
             instance = this;
         else
         {
-            Debug.LogError("Destroying extra GameManager component; please make sure this causes no errors.");
             Destroy(this);
         }
 
@@ -67,6 +66,7 @@ public class LevelManager : MonoBehaviour
     {
         TimeSpentInCurrentLevel += Time.deltaTime;
     }
+
 
     public void RespawnPlayer(Player player)
     {
