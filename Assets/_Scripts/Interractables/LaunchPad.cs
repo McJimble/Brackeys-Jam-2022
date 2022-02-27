@@ -23,7 +23,7 @@ public class LaunchPad : Interactable
 
     protected override void OnTriggerExit(Collider other)
     {
-        base.OnTriggerExit(other);
+      
     }
 
     public void LaunchPlayer(Player player)
@@ -34,10 +34,13 @@ public class LaunchPad : Interactable
         player.CharacterInputs.Disable();
         player.ClearMovementInput();
         player.AttachedMotor.onMotorGrounded += ReEnableControl;
+
     }
 
     private void ReEnableControl()
     {
+        if (interactingPlayer == null) return;
+       
         interactingPlayer.CharacterInputs.Enable();
         interactingPlayer.AttachedMotor.onMotorGrounded -= ReEnableControl;
         interactingPlayer = null;
