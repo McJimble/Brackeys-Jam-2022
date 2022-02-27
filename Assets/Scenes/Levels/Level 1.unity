@@ -10130,7 +10130,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7766666, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -14466,6 +14466,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2694009171803212539, guid: d4d0e6485e5d1c941a09917a7d62cb6c, type: 3}
+      propertyPath: m_Height
+      value: 2.6466887
+      objectReference: {fileID: 0}
+    - target: {fileID: 2694009171803212539, guid: d4d0e6485e5d1c941a09917a7d62cb6c, type: 3}
+      propertyPath: m_Radius
+      value: 0.46655554
+      objectReference: {fileID: 0}
+    - target: {fileID: 2694009171803212539, guid: d4d0e6485e5d1c941a09917a7d62cb6c, type: 3}
+      propertyPath: m_Center.x
+      value: 0.013307028
+      objectReference: {fileID: 0}
+    - target: {fileID: 2694009171803212539, guid: d4d0e6485e5d1c941a09917a7d62cb6c, type: 3}
+      propertyPath: m_Center.y
+      value: 0.32334408
+      objectReference: {fileID: 0}
     - target: {fileID: 2694009171803212543, guid: d4d0e6485e5d1c941a09917a7d62cb6c, type: 3}
       propertyPath: jumpSFX
       value: 
@@ -17338,7 +17354,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7299166298913157295, guid: 4ccf77edf5470f74283958a44e6715e6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.98757935
+      value: -0.9875488
       objectReference: {fileID: 0}
     - target: {fileID: 7299166299797813826, guid: 4ccf77edf5470f74283958a44e6715e6, type: 3}
       propertyPath: m_Name

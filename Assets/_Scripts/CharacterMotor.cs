@@ -65,6 +65,7 @@ public class CharacterMotor : MonoBehaviour
     public bool IsJumpingBuffered { get => jumpBufferTimeRemaining > 0f; }
     public bool IsJumping { get => jumpDelayTimeRemaining > 0f; }
     public float JumpSpeed { get => jumpSpeed; set => jumpSpeed = value; }
+    public CapsuleCollider Capsule { get => capsule; }
     public Rigidbody AttachedRB { get => rb; }
 
     public event System.Action onMotorGrounded;

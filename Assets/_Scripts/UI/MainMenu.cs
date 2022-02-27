@@ -1,16 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("UI Stuff")]
+    [SerializeField] Button newGameButton;
     [SerializeField] Button continueButton;
+    [SerializeField] Button optionsButton;
+    [SerializeField] Button quitButton;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject optionsMenu;
+
+    [Header("Special VFX")]
+    [SerializeField] private float titleRotateSpeed;
+    [SerializeField] private float titleRotAmount;
+    [Space]
+    [SerializeField] private float playerMoveSpeed;
+    [SerializeField] private float playerMoveAmount;
+    [Space]
+    [SerializeField] private GameObject titleObj;
+    [SerializeField] private GameObject playerMainObj;
+    [SerializeField] private GameObject continueMesh;
+    [SerializeField] private GameObject optionsMesh;
+    [SerializeField] private GameObject quitMesh;
+
     AudioSource audioSource;
     bool noSavedLevel = false;
+
+    private Vector3 playerStartPos;
+    private Vector3 playerDisplacement;
+
+    private Quaternion titleStartRot;
+    private Quaternion titleDisplaceRot;
 
     private void Awake()
     {
@@ -23,7 +48,25 @@ public class MainMenu : MonoBehaviour
             continueButton.GetComponent<Image>().color = Color.gray;
             noSavedLevel = true;
         }
+
+        playerStartPos = playerMainObj.transform.position;
+        playerDisplacement = playerStartPos;
+        playerDisplacement.y += playerMoveAmount;
+
+        titleStartRot = titleObj.transform.rotation;
+        titleDisplaceRot = Quaternion.Euler(titleStartRot.eulerAngles.x, titleStartRot.eulerAngles.y, titleStartRot.eulerAngles.z + titleRotAmount);
+
+        continueMesh.SetActive(false);
+        optionsMesh.SetActive(true);
+        quitMesh.SetActive(false);
     }
+
+    private void Update()
+    {
+        playerMainObj.transform.position = Vector3.Lerp(playerStartPos, playerDisplacement, Mathf.PingPong(Time.time * playerMoveSpeed, 1f));
+        titleObj.transform.rotation = Quaternion.Lerp(titleStartRot, titleDisplaceRot, Mathf.PingPong(Time.time * titleRotateSpeed, 1f));
+    }
+
     public void StartGame()
     {
         audioSource.Play();
@@ -64,5 +107,27 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quitting");
     }
 
-    
+    public void OnPointerEnter(Button eventData)
+    {
+        Button hoverButton = eventData;
+
+        if (hoverButton == continueButton || hoverButton == newGameButton)
+        {
+            continueMesh.SetActive(true);
+            optionsMesh.SetActive(false);
+            quitMesh.SetActive(false);
+        }
+        else if (hoverButton == optionsButton)
+        {
+            continueMesh.SetActive(false);
+            optionsMesh.SetActive(true);
+            quitMesh.SetActive(false);
+        }
+        else if (hoverButton == quitButton)
+        {
+            continueMesh.SetActive(false);
+            optionsMesh.SetActive(false);
+            quitMesh.SetActive(true);
+        }
+    }
 }

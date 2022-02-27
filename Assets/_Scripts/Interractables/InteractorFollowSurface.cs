@@ -23,11 +23,13 @@ public class InteractorFollowSurface : Interactable
             originalParentStore.Add(interactor, interactor.InteractingTransform.parent);
             interactor.InteractingTransform.parent = this.transform;
         }
+
+        currentlyInteractingObjects.RemoveWhere(n => n == null);
     }
 
     public void UnparentInteractor(IInteractor toUnparent)
     {
-        if (!originalParentStore.ContainsKey(toUnparent)) return;
+        if (!originalParentStore.ContainsKey(toUnparent) || !toUnparent.CanInterchangeParents) return;
 
         toUnparent.InteractingTransform.parent = originalParentStore[toUnparent];
         originalParentStore.Remove(toUnparent);

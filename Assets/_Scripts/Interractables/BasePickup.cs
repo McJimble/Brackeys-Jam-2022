@@ -5,11 +5,14 @@ public class BasePickup : Interactable, IInteractor
 {
     [SerializeField] private float distanceFromHolder = 0.5f;
     [SerializeField] private SphereCollider pickupRangeTrigger;
+    [SerializeField] private Collider mainPhysicsCollider;
     public bool CanInterchangeParents => true;
 
     public bool CanInteract => interactingPlayer == null;
     public Transform InteractingTransform => transform;
     public Rigidbody InteractingRB => AttachedRB;
+
+    public Collider InteractingCollider => mainPhysicsCollider;
 
     protected override void Awake()
     {
@@ -20,6 +23,8 @@ public class BasePickup : Interactable, IInteractor
         {
             Debug.LogWarning("Pickup range trigger not found. Some pickup interactions may break.");
         }
+
+        mainPhysicsCollider = (mainPhysicsCollider) ? mainPhysicsCollider : GetComponent<Collider>();
     }
 
     public override bool TryInteract(IInteractor interactor)
@@ -59,7 +64,7 @@ public class BasePickup : Interactable, IInteractor
         return true;
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
         if (interactingPlayer && CurrentlyInteracting)
         {

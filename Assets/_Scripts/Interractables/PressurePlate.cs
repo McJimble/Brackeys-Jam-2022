@@ -78,10 +78,8 @@ public class PressurePlate : Interactable
         // If other interactor exists in our table that we build on enter, then remove it now.
         IInteractor otherInteractor = other.GetComponent<IInteractor>();
         if (!FulfillsExitRadiusParams(otherInteractor)) return;
-        Debug.Log("PASSED1");
 
         currentlyInteractingObjects.Remove(otherInteractor);
-       
 
         if (!automaticallyTrackPlayers) return;
 
@@ -90,6 +88,8 @@ public class PressurePlate : Interactable
         {
             interactingPlayer = null;
         }
+
+        Debug.Log("Size: " + currentlyInteractingObjects.Count);
         if (currentlyInteractingObjects.Count == 0)
         {
             InvokeExitRadius(null);

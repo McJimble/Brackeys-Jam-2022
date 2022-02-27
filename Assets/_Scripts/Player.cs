@@ -48,6 +48,7 @@ public class Player : MonoBehaviour, IInteractor
     public CharacterMotor AttachedMotor { get => characterMotor; }
     public bool FaceMovementDirection { get => faceMovementDirection; set => faceMovementDirection = value; }
 
+    public Collider InteractingCollider => AttachedMotor.Capsule;
 
     private void Awake()
     {
@@ -76,6 +77,13 @@ public class Player : MonoBehaviour, IInteractor
         characterInputs.Disable();
         characterMotor.AttachedRB.velocity = Vector3.zero;
         movementInput = Vector2.zero;
+
+        foreach (var inter in inRangeInteractables)
+        {
+            inter.SpecialOnTriggerExit(this);
+        }
+        inRangeInteractables.Clear();
+
     }
 
     private void Update()
@@ -157,8 +165,6 @@ public class Player : MonoBehaviour, IInteractor
         }
     }
 
-  
-
     private void AttemptInterract()
     {
         // We treat pickups differently since they have to be dropped at some point.
@@ -228,6 +234,14 @@ public class Player : MonoBehaviour, IInteractor
         {
             // Do extra stuff if necessary w/ corpse here.
             corpseComp.InteractingRB.velocity = AttachedMotor.AttachedRB.velocity;
+        }
+
+        // Shouldn't have to do this but SOMEONE made the UI scripts edit the deaths and timer
+        // so I sorta have to do this.
+        OnScreenUI ui = FindObjectOfType<OnScreenUI>();
+        if (ui)
+        {
+            ui.IncreaseDeathCounter();
         }
 
         OnPlayerDeath?.Invoke(this);

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3230742651637326543}
   - component: {fileID: 3230742651637326541}
   - component: {fileID: 3230742651637326538}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player Corpse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoDestroyAfterTime: 8
+  mainPhysicsCollider: {fileID: 3230742651637326543}
 --- !u!1001 &3230742651417901689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,9 +142,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 784848638548316577, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
       propertyPath: m_Name
       value: Player Dead
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1797797537895704177, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881992704548618285, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908888856049078515, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8962635848729988843, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6b6614d3747c674e9229135b2ce7a11, type: 3}

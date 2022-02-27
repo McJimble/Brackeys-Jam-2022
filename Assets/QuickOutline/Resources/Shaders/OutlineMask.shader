@@ -13,7 +13,7 @@ Shader "Custom/Outline Mask" {
 
   SubShader {
     Tags {
-      "Queue" = "Transparent+2"
+      "Queue" = "Transparent-2"
       "RenderType" = "Transparent"
     }
 

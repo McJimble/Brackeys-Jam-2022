@@ -243,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsGroundMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   groundCheckHeight: 0.02
   pullToGroundHeight: 0.02
   pullToGroundForce: 50

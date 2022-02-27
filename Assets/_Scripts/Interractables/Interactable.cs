@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public abstract class Interactable : MonoBehaviour
 {
+    private static float CHECK_REMOVED_INTERACTORS_TIME = 0.2f;
+
     [SerializeField] protected bool automaticallyTrackPlayers = true;
     [SerializeField] protected bool requiresKeyPress = true;
     [SerializeField] protected Outline outlineEffect;
@@ -20,6 +22,7 @@ public abstract class Interactable : MonoBehaviour
 
     protected Player interactingPlayer = null;
     protected bool canInterract = true;
+    protected float checkInteractorsTimer = 0f;
 
     protected Collider genericTriggerBounds;
 
@@ -36,10 +39,42 @@ public abstract class Interactable : MonoBehaviour
         CurrentlyInteracting = false;
         CanBeInteracted = true;
         AttachedRB = GetComponent<Rigidbody>();
+        checkInteractorsTimer = CHECK_REMOVED_INTERACTORS_TIME;
         genericTriggerBounds = GetComponent<Collider>();
         outlineEffect = (outlineEffect) ? outlineEffect : GetComponent<Outline>();
 
         currentlyInteractingObjects.Clear();
+
+        Player.OnPlayerDeath += HandlePlayerDeath;
+    }
+
+    protected virtual void Update()
+    {
+        if (checkInteractorsTimer <= 0f)
+        {
+            if (currentlyInteractingObjects.RemoveWhere(n => n == null) > 0 && currentlyInteractingObjects.Count == 0)
+            {
+                InvokeExitRadius(null);
+            }
+            checkInteractorsTimer = CHECK_REMOVED_INTERACTORS_TIME;
+        }
+
+        checkInteractorsTimer -= Time.deltaTime;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        Player.OnPlayerDeath -= HandlePlayerDeath;
+    }
+
+    public virtual void HandlePlayerDeath(Player player)
+    {
+        if (interactingPlayer == player)
+        {
+            interactingPlayer = null;
+        }
+
+        currentlyInteractingObjects.Remove(player);
     }
 
     public virtual bool FulfillsInitialInteractionsParams(IInteractor interactor)
@@ -88,11 +123,9 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        
         // If other interactor exists in our table that we build on enter, then remove it now.
         IInteractor otherInteractor = other.GetComponent<IInteractor>();
         if (!FulfillsExitRadiusParams(otherInteractor)) return;
-        Debug.Log("PASSED1");
 
         currentlyInteractingObjects.Remove(otherInteractor);
         InvokeExitRadius(otherInteractor);
@@ -104,6 +137,13 @@ public abstract class Interactable : MonoBehaviour
         {
             interactingPlayer = null;
         }
+    }
+
+    // For special cases where an interactor deems itself that it has exited the radius/interaction of this object.
+    // Good for things that can be destroyed on set inactive during the interaction and still get removed (ex. Corpses)
+    public virtual void SpecialOnTriggerExit(IInteractor other)
+    {
+        OnTriggerExit(other.InteractingCollider);
     }
 
     public virtual void ToggleInteractAvailableEffect(bool enable)
