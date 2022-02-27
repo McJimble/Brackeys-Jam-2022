@@ -23,25 +23,18 @@ public class LaunchPad : Interactable
 
     protected override void OnTriggerExit(Collider other)
     {
-        if(other.GetComponent<Player>() == interactingPlayer)
-        {
-           
-        }
+        base.OnTriggerExit(other);
     }
-
 
     public void LaunchPlayer(Player player)
     {
+        Debug.Log("Launch Player");
         player.AttachedMotor.AttachedRB.AddForce(launchForce * forceDirection.up, ForceMode.Impulse);
         if (!disablePlayerControl) return;
         player.CharacterInputs.Disable();
         player.ClearMovementInput();
         player.AttachedMotor.onMotorGrounded += ReEnableControl;
     }
-
-   
-
-
 
     private void ReEnableControl()
     {
