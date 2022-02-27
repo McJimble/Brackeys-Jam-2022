@@ -85,7 +85,7 @@ public class LevelManager : MonoBehaviour
         player.AttachedMotor.AttachedRB.velocity = Vector3.zero;
         player.CharacterInputs.Disable();
 
-
+        player.transform.forward = Vector3.left;
         yield return new WaitForSeconds(.75f);
         while (timeElapsed < .5f)
         {
@@ -96,7 +96,6 @@ public class LevelManager : MonoBehaviour
         }
 
         player.transform.position = player.ShovePoint.position;
-        player.transform.forward = Vector3.left;
         player.CharacterInputs.Enable();
     }
 

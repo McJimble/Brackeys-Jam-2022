@@ -36,6 +36,7 @@ public class BasePickup : Interactable, IInteractor
         // else, we are picking it up.
         if (interactingPlayer)
         {
+            AttachedRB.velocity = interactingPlayer.AttachedMotor.AttachedRB.velocity;
             interactingPlayer = null;
 
             // If pickup still overlaps with player after dropping, still allow them to pick it up.
@@ -56,6 +57,7 @@ public class BasePickup : Interactable, IInteractor
             interactingPlayer = player;
             AttachedRB.detectCollisions = false;
             AttachedRB.useGravity = false;
+            AttachedRB.velocity = Vector3.zero;
             CurrentlyInteracting = true;
             CanBeInteracted = false;
             InvokeInteract(interactor);
