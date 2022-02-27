@@ -17,10 +17,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get => instance; }
 
     [Header("Required")]
+    [SerializeField] private AudioSource musicSource;
     [SerializeField] private string[] levelNames;
-
-    [Header("TEMPORARY")]
-    [SerializeField] private int debugOverrideCurrentLevel;
 
     private int currentLevel = 1;
     private int currentLevelName;
@@ -28,6 +26,8 @@ public class LevelManager : MonoBehaviour
     public float TimeSpentInCurrentLevel { get; private set; }
     public int LevelNumber { get => currentLevel; }
     public string LevelName { get => levelNames[currentLevel - 1]; }
+
+    public bool PlayerRespawning { get; private set; }
 
     public static Scene GetSceneFromLevelNumber(int levelNumber)
     {
@@ -50,17 +50,13 @@ public class LevelManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         TimeSpentInCurrentLevel = 0f;
+        PlayerRespawning = false;
         currentLevel = GetLevelNumberFromCurrentScene();
-
-        if (currentLevel >= SceneManager.sceneCountInBuildSettings)
-        {
-            currentLevel = debugOverrideCurrentLevel;
-        }
     }
 
     private void Start()
     {
-
+        musicSource?.Play();
     }
 
     private void Update()
@@ -70,6 +66,7 @@ public class LevelManager : MonoBehaviour
 
     public void RespawnPlayer(Player player)
     {
+        PlayerRespawning = true;
         StartCoroutine(RespawnPlayerSequence(player));
     }
 
@@ -97,6 +94,7 @@ public class LevelManager : MonoBehaviour
 
         player.transform.position = player.ShovePoint.position;
         player.CharacterInputs.Enable();
+        PlayerRespawning = false;
     }
 
     public void NextLevel()

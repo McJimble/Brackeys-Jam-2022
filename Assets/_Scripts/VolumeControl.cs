@@ -16,17 +16,13 @@ public class VolumeControl : MonoBehaviour
     private void Awake()
     {
         _slider.onValueChanged.AddListener(HandleSliderValueChanged);
-       
     }
-
 
 
     private void OnDisable()
     {
         PlayerPrefs.SetFloat(_volumeParameter, _slider.value);
     }
-
-   
 
     private void HandleSliderValueChanged(float value)
     {

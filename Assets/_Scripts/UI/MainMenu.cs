@@ -40,7 +40,11 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
+
     private void Start()
     {
         if (PlayerPrefs.GetInt("CurrentLevel") == 0)
@@ -63,8 +67,11 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        playerMainObj.transform.position = Vector3.Lerp(playerStartPos, playerDisplacement, Mathf.PingPong(Time.time * playerMoveSpeed, 1f));
-        titleObj.transform.rotation = Quaternion.Lerp(titleStartRot, titleDisplaceRot, Mathf.PingPong(Time.time * titleRotateSpeed, 1f));
+        if (playerMainObj)
+            playerMainObj.transform.position = Vector3.Lerp(playerStartPos, playerDisplacement, Mathf.PingPong(Time.time * playerMoveSpeed, 1f));
+
+        if (titleObj)
+            titleObj.transform.rotation = Quaternion.Lerp(titleStartRot, titleDisplaceRot, Mathf.PingPong(Time.time * titleRotateSpeed, 1f));
     }
 
     public void StartGame()

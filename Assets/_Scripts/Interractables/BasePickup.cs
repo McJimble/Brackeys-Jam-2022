@@ -27,6 +27,19 @@ public class BasePickup : Interactable, IInteractor
         mainPhysicsCollider = (mainPhysicsCollider) ? mainPhysicsCollider : GetComponent<Collider>();
     }
 
+    public override void HandlePlayerDeath(Player player)
+    {
+        if (interactingPlayer && interactingPlayer == player)
+        {
+            AttachedRB.velocity = interactingPlayer.AttachedMotor.AttachedRB.velocity;
+            AttachedRB.detectCollisions = true;
+            AttachedRB.useGravity = true;
+            CurrentlyInteracting = false;
+            CanBeInteracted = true;
+            interactingPlayer = null;
+        }
+    }
+
     public override bool TryInteract(IInteractor interactor)
     {
         Player player = interactor as Player;

@@ -44,6 +44,12 @@ public class TelevisionUI : MonoBehaviour
     private float timeUntilNextBlink = 0f;
     private bool blinking = false;
 
+    // Level 8 stuff
+    private Player playerRef;
+    private float flipStateTime = 2f;
+    private float timeUntilFlip = 2f;
+    private bool canPlayerMove = true;
+
     private void OnValidate()
     {
         maxEmissionIntensity = Mathf.Max(minEmissionIntensity, maxEmissionIntensity);
@@ -53,6 +59,7 @@ public class TelevisionUI : MonoBehaviour
     {
         mainCanvas = GetComponent<Canvas>();
         audioSrc = GetComponent<AudioSource>();
+        playerRef = FindObjectOfType<Player>();
 
         activeImage = normalFace;
         timeUntilNextBlink = imgBlinkTime;
@@ -69,6 +76,38 @@ public class TelevisionUI : MonoBehaviour
     private void Update()
     {
         tvEmissionLight.intensity = Mathf.PingPong(Time.time * emissionIntensitySpeed, maxEmissionIntensity - minEmissionIntensity) + minEmissionIntensity;
+
+        // This is an absolutely disgusting way to do this, but i don't care right now
+        // ---- LEVEL 8 STUFF ---- 
+        if (LevelManager.Instance.LevelNumber == 8 && !Blinking)
+        {
+            if (timeUntilFlip <= 0f)
+            {
+                canPlayerMove = !canPlayerMove;
+                if (canPlayerMove)
+                {
+                    happyFace.gameObject.SetActive(true);
+                    sadFace.gameObject.SetActive(false);
+                    normalFace.gameObject.SetActive(false);
+                }
+                else
+                {
+                    happyFace.gameObject.SetActive(false);
+                    sadFace.gameObject.SetActive(true);
+                    normalFace.gameObject.SetActive(false);
+                }
+
+                timeUntilFlip = flipStateTime;
+            }
+
+            if (!canPlayerMove && playerRef.movementInput.magnitude > 0 && !LevelManager.Instance.PlayerRespawning)
+            {
+                playerRef.KillPlayer();
+            }
+
+            timeUntilFlip -= Time.deltaTime;
+        }
+        //---- END LEVEL 8 STUFF ----
 
         if (Blinking)
         {

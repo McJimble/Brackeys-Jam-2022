@@ -11,10 +11,10 @@ public class SceneSwitcher : MonoBehaviour
     [SerializeField] int sceneToLoad = -1;
     Player player;
 
-    // ALL OF THESE WILL GO TO LEVEL MANAGER SHORTLY
     [Space]
     [SerializeField] private float exitTransitionTime = 1.6f;
     [SerializeField] private float enterTransitionTime = 1.6f;
+    [SerializeField] private bool playEnterOnStart = true;
 
     [SerializeField] private Animator transitionAnimator;
     private int exitTransitionHash;
@@ -32,7 +32,8 @@ public class SceneSwitcher : MonoBehaviour
 
     private void Start()
     {
-        transitionAnimator.Play(enterTransitionHash);
+        if (playEnterOnStart)
+            transitionAnimator.Play(enterTransitionHash);
     }
 
     private void OnTriggerEnter(Collider other)

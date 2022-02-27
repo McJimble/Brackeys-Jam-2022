@@ -213,6 +213,10 @@ public class Player : MonoBehaviour, IInteractor
         moveDirection = moveDirection + cameraObject.right * movementInput.x;
         moveDirection.Normalize();
         moveDirection.y = 0;
+
+        if (LevelManager.Instance.LevelNumber == 7)
+            moveDirection *= -1;
+
         return moveDirection * movementSpeed;
     }
 
@@ -223,6 +227,9 @@ public class Player : MonoBehaviour, IInteractor
 
     public void KillPlayer()
     {
+        transform.parent = null;
+        inRangeInteractables.Remove(heldPickup);
+        heldPickup = null;
         DeathParticle.transform.position = transform.position;
         DeathParticle.Play();
         ExplosionSFX.Instance.PlayExplosion();
