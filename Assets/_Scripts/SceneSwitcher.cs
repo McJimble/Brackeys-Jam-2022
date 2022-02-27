@@ -49,9 +49,12 @@ public class SceneSwitcher : MonoBehaviour
         WaitForSeconds waitUntilTransition = new WaitForSeconds(startTransitionTime);
         WaitForSeconds waitUntilAnimDone = new WaitForSeconds(exitTransitionTime);
         TelevisionUI tv = FindObjectOfType<TelevisionUI>();
+        Player player = FindObjectOfType<Player>();
 
         tv.PlayClipFromTV(winClip);
         tv.PlayHappyFace(-1, startTransitionTime);
+
+        player.CharacterInputs.Disable();
 
         yield return waitUntilTransition;
 
