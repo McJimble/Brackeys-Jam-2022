@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IInteractor
     [Space]
     [SerializeField] private GameObject walkingMesh;
     [SerializeField] private GameObject jumpingMesh;
-    [SerializeField] private GameObject corpseOnDeath;
+    
     [Space]
     private Animator animator;
     private int walkingParamHash = Animator.StringToHash("isWalking");
@@ -228,13 +228,13 @@ public class Player : MonoBehaviour, IInteractor
         ExplosionSFX.Instance.PlayExplosion();
         CinemachineShake.Instance.ShakeCamera(10f, .7f);
 
-        GameObject corpse = Instantiate(corpseOnDeath, walkingMesh.transform.position, walkingMesh.transform.rotation, null);
-        Corpse corpseComp;
-        if (corpse.TryGetComponent(out corpseComp))
-        {
-            // Do extra stuff if necessary w/ corpse here.
-            corpseComp.InteractingRB.velocity = AttachedMotor.AttachedRB.velocity;
-        }
+        //GameObject corpse = Instantiate(corpseOnDeath, walkingMesh.transform.position, walkingMesh.transform.rotation, null);
+        //Corpse corpseComp;
+        //if (corpse.TryGetComponent(out corpseComp))
+        //{
+        //    // Do extra stuff if necessary w/ corpse here.
+        //    corpseComp.InteractingRB.velocity = AttachedMotor.AttachedRB.velocity;
+        //}
 
         // Shouldn't have to do this but SOMEONE made the UI scripts edit the deaths and timer
         // so I sorta have to do this.
